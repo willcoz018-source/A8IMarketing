@@ -1,0 +1,5 @@
+{
+  "rewrites": [
+    { "source": "/", "destination": "/activ8-marketing-dashboard.html" }
+  ]
+}
