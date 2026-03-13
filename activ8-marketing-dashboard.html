@@ -1,0 +1,2772 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Activ8 Insights — Marketing HQ</title>
+<link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600,700&f[]=satoshi@400,500,700&display=swap">
+<script src="https://code.iconify.design/iconify-icon/2.1.0/iconify-icon.min.js"></script>
+<style>
+:root {
+  --bg:           #020617;
+  --surface:      #0f172a;
+  --surface-2:    #1e293b;
+  --surface-3:    #334155;
+  --border:       #1e293b;
+  --border-bright:#334155;
+  --text:         #f1f5f9;
+  --text-mid:     #94a3b8;
+  --text-dim:     #64748b;
+  --orange:       #c0ff00;
+  --blue:         #3b82f6;
+  --green:        #4ade80;
+  --purple:       #a855f7;
+  --teal:         #2dd4bf;
+  --amber:        #f59e0b;
+  --rose:         #ec4899;
+  --cyan:         #22d3ee;
+  --yellow:       #c0ff00;
+  --red:          #f43f5e;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Satoshi', sans-serif;
+  font-weight: 400;
+  line-height: 1.6;
+  min-height: 100vh;
+}
+h1, h2, h3, h4, h5, h6, .section-title, .ch-name, .brand, .email-card h4 {
+  font-family: 'General Sans', sans-serif;
+}
+/* Scrollbar */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--border-bright); border-radius: 3px; }
+/* Utility */
+.mono { font-family: 'Satoshi', sans-serif; font-weight: 500; }
+.text-dim { color: var(--text-dim); }
+.text-mid { color: var(--text-mid); }
+.text-orange { color: var(--orange); }
+.text-green { color: var(--green); }
+.text-blue { color: var(--blue); }
+.text-rose { color: var(--rose); }
+.text-purple { color: var(--purple); }
+.text-teal { color: var(--teal); }
+.text-amber { color: var(--amber); }
+.text-cyan { color: var(--cyan); }
+
+/* ─── APP SHELL ─── */
+.app-shell {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  min-height: 100vh;
+}
+
+/* ─── SIDEBAR ─── */
+.sidebar {
+  position: sticky; top: 0; height: 100vh;
+  background: var(--surface);
+  border-right: 1px solid var(--border);
+  display: flex; flex-direction: column;
+  padding: 0;
+  overflow-y: auto;
+  z-index: 100;
+}
+.sidebar-logo {
+  display: flex; align-items: center; gap: 12px;
+  padding: 28px 24px 10px;
+}
+.sidebar-logo .logo-icon {
+  width: 40px; height: 40px; background: var(--orange);
+  border-radius: 12px; display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.sidebar-logo .logo-icon iconify-icon { font-size: 22px; color: #000; }
+.logo-text { display: flex; flex-direction: column; }
+.logo-text .brand { font-family: 'General Sans', sans-serif; font-weight: 700; font-size: 20px; color: #fff; letter-spacing: -0.5px; }
+.logo-text .sub { font-family: 'Satoshi', sans-serif; font-size: 11px; color: var(--text-dim); letter-spacing: 1.5px; text-transform: uppercase; font-weight: 500; }
+.sidebar-date {
+  font-family: 'Satoshi', sans-serif; font-size: 11px; font-weight: 500;
+  color: var(--text-dim); padding: 0 24px 20px;
+}
+.sidebar-label {
+  font-family: 'Satoshi', sans-serif;
+  font-size: 10px; font-weight: 700;
+  color: var(--text-dim);
+  text-transform: uppercase; letter-spacing: 1.5px;
+  padding: 12px 24px 8px;
+  border-top: 1px solid var(--border);
+}
+.sidebar-nav {
+  display: flex; flex-direction: column; gap: 2px;
+  padding: 4px 10px;
+}
+.sidebar-tab {
+  background: none; border: none;
+  text-align: left;
+  padding: 11px 14px;
+  color: var(--text-dim);
+  font-family: 'Satoshi', sans-serif;
+  font-size: 14px; font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  border-radius: 12px;
+  display: flex; align-items: center; gap: 10px;
+}
+.sidebar-tab:hover {
+  color: #fff;
+  background: rgba(255,255,255,0.04);
+}
+.sidebar-tab.active {
+  color: #fff;
+  background: rgba(192,255,0,0.08);
+}
+.sidebar-tab .st-icon {
+  font-size: 16px; width: 20px; text-align: center; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  color: inherit;
+}
+
+/* ─── CONTENT ─── */
+.main { padding: 36px 44px; overflow-y: auto; max-height: 100vh; }
+.tab-panel { display: none; animation: fadeIn 0.3s ease; }
+.tab-panel.active { display: block; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+
+/* ─── CARDS ─── */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  padding: 24px;
+  margin-bottom: 20px;
+  backdrop-filter: blur(12px);
+  transition: border-color 0.2s;
+}
+.card:hover { border-color: rgba(192,255,0,0.15); }
+.card-accent { border-top: 3px solid var(--orange); }
+.card-accent-blue { border-top: 3px solid var(--blue); }
+.card-accent-green { border-top: 3px solid var(--green); }
+.card-accent-purple { border-top: 3px solid var(--purple); }
+.card-accent-teal { border-top: 3px solid var(--teal); }
+.card-accent-amber { border-top: 3px solid var(--amber); }
+.card-accent-rose { border-top: 3px solid var(--rose); }
+.card-accent-cyan { border-top: 3px solid var(--cyan); }
+.card-accent-pink { border-top: 3px solid #EC4899; }
+
+.section-title {
+  font-family: 'General Sans', sans-serif;
+  font-weight: 700; font-size: 22px; margin-bottom: 6px; color: var(--text);
+}
+.section-sub {
+  font-family: 'Satoshi', sans-serif; font-size: 12px; font-weight: 500;
+  color: var(--text-dim); margin-bottom: 20px; letter-spacing: 0.5px;
+}
+.section-divider { border: none; border-top: 1px solid var(--border); margin: 32px 0; }
+
+/* Grid helpers */
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+.grid-6 { display: grid; grid-template-columns: repeat(6, 1fr); gap: 16px; }
+
+/* ─── COUNTDOWN ─── */
+.countdown-box {
+  text-align: center; padding: 40px 24px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 24px; margin-bottom: 28px;
+  position: relative; overflow: hidden;
+}
+.countdown-box::before {
+  content: ''; position: absolute; inset: 0;
+  background: radial-gradient(ellipse at center, rgba(192,255,0,0.03) 0%, transparent 70%);
+  pointer-events: none;
+}
+.countdown-badge {
+  display: inline-block; font-family: 'Satoshi', sans-serif;
+  font-size: 11px; font-weight: 700; color: var(--orange);
+  background: rgba(192,255,0,0.1); border: 1px solid rgba(192,255,0,0.3);
+  border-radius: 8px; padding: 4px 14px; margin-bottom: 20px;
+  letter-spacing: 1.5px; text-transform: uppercase;
+}
+.countdown-digits {
+  display: flex; justify-content: center; gap: 24px; margin-bottom: 16px;
+}
+.cd-unit { display: flex; flex-direction: column; align-items: center; }
+.cd-num {
+  font-family: 'General Sans', sans-serif; font-weight: 700;
+  font-size: 56px; color: var(--orange); line-height: 1;
+}
+.cd-label {
+  font-family: 'Satoshi', sans-serif; font-size: 11px; font-weight: 700;
+  color: var(--text-dim); text-transform: uppercase; letter-spacing: 1px; margin-top: 6px;
+}
+.countdown-sub { font-size: 15px; color: var(--text-mid); }
+
+/* ─── PROGRESS BAR ─── */
+.progress-wrap { margin-bottom: 24px; }
+.progress-header {
+  display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;
+}
+.progress-header span { font-family: 'Satoshi', sans-serif; font-size: 13px; font-weight: 500; }
+.progress-track {
+  height: 6px; background: var(--surface-3); border-radius: 99px; overflow: hidden;
+}
+.progress-fill {
+  height: 100%; background: var(--orange);
+  border-radius: 99px; transition: width 0.4s ease;
+  box-shadow: 0 0 12px rgba(192,255,0,0.3);
+}
+.progress-fill.green-fill { background: var(--green); box-shadow: 0 0 12px rgba(74,222,128,0.3); }
+
+/* ─── CHECKLIST ─── */
+.checklist-group { margin-bottom: 28px; }
+.checklist-group-title {
+  font-weight: 600; font-size: 15px; margin-bottom: 12px;
+  display: flex; align-items: center; gap: 10px;
+}
+.owner-badge {
+  font-family: 'Satoshi', sans-serif; font-size: 10px;
+  font-weight: 700; padding: 2px 8px; border-radius: 6px;
+  text-transform: uppercase; letter-spacing: 0.5px;
+}
+.badge-kai { background: rgba(59,130,246,0.2); color: var(--blue); }
+.badge-will { background: rgba(192,255,0,0.1); color: var(--orange); }
+.badge-closeup { background: rgba(168,85,247,0.2); color: var(--purple); }
+.badge-matt { background: rgba(45,212,191,0.2); color: var(--teal); }
+.badge-gabe { background: rgba(34,211,238,0.2); color: var(--cyan); }
+.checklist-item {
+  display: flex; align-items: center; gap: 12px;
+  padding: 10px 14px; border-radius: 8px;
+  cursor: pointer; transition: background 0.15s;
+}
+.checklist-item:hover { background: var(--surface-2); }
+.checklist-item input[type="checkbox"] {
+  appearance: none; -webkit-appearance: none;
+  width: 18px; height: 18px; border: 2px solid var(--border-bright);
+  border-radius: 4px; cursor: pointer; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.15s;
+}
+.checklist-item input[type="checkbox"]:checked {
+  background: var(--orange); border-color: var(--orange);
+}
+.checklist-item input[type="checkbox"]:checked::after {
+  content: '✓'; color: #000; font-size: 12px; font-weight: 700;
+}
+.checklist-item.checked .cl-text { color: var(--text-dim); text-decoration: line-through; }
+.cl-text { font-size: 14px; flex: 1; }
+
+/* ─── STATUS BADGES ─── */
+.status {
+  font-family: 'Satoshi', sans-serif; font-size: 10px;
+  font-weight: 700; padding: 3px 10px; border-radius: 6px;
+  text-transform: uppercase; letter-spacing: 0.5px; white-space: nowrap;
+}
+.status-draft { background: rgba(251,191,36,0.12); color: var(--yellow); }
+.status-not-started { background: rgba(107,113,144,0.15); color: var(--text-dim); }
+.status-active { background: rgba(52,211,153,0.12); color: var(--green); }
+.status-in-progress { background: rgba(75,139,255,0.12); color: var(--blue); }
+.status-sent { background: rgba(167,139,250,0.12); color: var(--purple); }
+.status-connected { background: rgba(52,211,153,0.12); color: var(--green); }
+.status-not-yet { background: rgba(192,255,0,0.12); color: var(--rose); }
+.status-high { background: rgba(192,255,0,0.12); color: var(--orange); }
+.status-medium { background: rgba(251,191,36,0.12); color: var(--yellow); }
+.status-low { background: rgba(107,113,144,0.15); color: var(--text-dim); }
+.status-highest { background: rgba(192,255,0,0.2); color: var(--orange); border: 1px solid rgba(192,255,0,0.3); }
+.status-early { background: rgba(34,211,238,0.12); color: var(--cyan); }
+
+/* ─── EMAIL CARDS ─── */
+.email-card {
+  background: rgba(15,23,42,0.7); backdrop-filter: blur(12px);
+  border: 1px solid var(--border);
+  border-radius: 20px; padding: 24px; display: flex; flex-direction: column;
+  transition: border-color 0.2s;
+}
+.email-card:hover { border-color: rgba(192,255,0,0.2); }
+.email-card h4 { font-weight: 700; font-size: 16px; margin-bottom: 4px; }
+.email-meta { font-family: 'Satoshi', sans-serif; font-size: 11px; font-weight: 500; color: var(--text-dim); margin-bottom: 12px; }
+.email-card p { font-size: 14px; color: var(--text-mid); margin-bottom: 6px; flex: 1; }
+.email-card .cta-line { font-size: 13px; color: var(--orange); font-weight: 600; margin-top: 8px; }
+
+/* ─── COLLAPSIBLE ─── */
+.collapsible-btn {
+  background: var(--surface-2); border: 1px solid var(--border);
+  border-radius: 12px; padding: 12px 18px; color: var(--orange);
+  font-family: 'Satoshi', sans-serif; font-size: 13px; font-weight: 600;
+  cursor: pointer; width: 100%; text-align: left; display: flex;
+  justify-content: space-between; align-items: center;
+  transition: all 0.2s;
+}
+.collapsible-btn:hover { border-color: rgba(192,255,0,0.3); background: var(--surface-3); }
+.collapsible-btn .arrow { transition: transform 0.2s; }
+.collapsible-btn.open .arrow { transform: rotate(180deg); }
+.collapsible-content {
+  display: none; background: var(--surface-3); border: 1px solid var(--border);
+  border-top: none; border-radius: 0 0 12px 12px; padding: 20px;
+  margin-top: -1px;
+}
+.collapsible-content.open { display: block; }
+.collapsible-content pre {
+  font-family: 'Satoshi', sans-serif; font-size: 13px;
+  color: var(--text-mid); white-space: pre-wrap; line-height: 1.7;
+}
+
+/* ─── GALLERY ─── */
+.gallery-nav {
+  position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%);
+  display: flex; align-items: center; gap: 8px;
+  background: rgba(2,6,23,0.85); backdrop-filter: blur(12px);
+  border: 1px solid var(--border);
+  border-radius: 20px; padding: 4px 12px;
+}
+.gal-btn {
+  background: none; border: none; color: var(--text); font-size: 20px;
+  cursor: pointer; padding: 2px 6px; line-height: 1; transition: color 0.15s;
+}
+.gal-btn:hover { color: var(--orange); }
+.gal-counter { font-size: 11px; color: var(--text-dim); }
+
+/* ─── WHO WE ARE: VERTICAL TABS ─── */
+.wwa-layout {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  gap: 0;
+  min-height: 70vh;
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  overflow: hidden;
+  background: var(--surface);
+}
+.wwa-sidebar {
+  background: var(--surface-2);
+  border-right: 1px solid var(--border);
+  padding: 20px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.wwa-sidebar-label {
+  font-family: 'Satoshi', sans-serif;
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  padding: 12px 20px 6px;
+}
+.wwa-nav-btn {
+  background: none;
+  border: none;
+  text-align: left;
+  padding: 12px 20px;
+  color: var(--text-dim);
+  font-family: 'Satoshi', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s;
+  border-left: 3px solid transparent;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.wwa-nav-btn:hover {
+  color: var(--text-mid);
+  background: rgba(255,255,255,0.02);
+}
+.wwa-nav-btn.active {
+  color: #fff;
+  background: rgba(192,255,0,0.06);
+  border-left-color: var(--orange);
+}
+.wwa-nav-btn .wwa-icon {
+  font-size: 16px;
+  width: 20px;
+  text-align: center;
+  flex-shrink: 0;
+}
+.wwa-content {
+  padding: 36px 40px;
+  overflow-y: auto;
+  max-height: 80vh;
+}
+.wwa-section { display: none; animation: fadeIn 0.3s ease; }
+.wwa-section.active { display: block; }
+.wwa-section h2 {
+  font-family: 'General Sans', sans-serif;
+  font-weight: 700;
+  font-size: 26px;
+  color: var(--text);
+  margin-bottom: 6px;
+}
+.wwa-section .wwa-tagline {
+  font-family: 'Satoshi', sans-serif;
+  font-size: 12px;
+  color: var(--orange);
+  letter-spacing: 0.5px;
+  margin-bottom: 24px;
+}
+.wwa-section p {
+  color: var(--text-mid);
+  font-size: 15px;
+  line-height: 1.75;
+  margin-bottom: 16px;
+}
+.wwa-section h3 {
+  font-family: 'General Sans', sans-serif;
+  font-weight: 700;
+  font-size: 18px;
+  color: var(--text);
+  margin: 28px 0 12px;
+}
+.wwa-section h4 {
+  font-family: 'General Sans', sans-serif;
+  font-weight: 600;
+  font-size: 15px;
+  color: var(--text);
+  margin: 20px 0 8px;
+}
+.wwa-section ul {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 16px 0;
+}
+.wwa-section ul li {
+  position: relative;
+  padding: 6px 0 6px 20px;
+  color: var(--text-mid);
+  font-size: 14px;
+  line-height: 1.6;
+}
+.wwa-section ul li::before {
+  content: '▸';
+  position: absolute;
+  left: 0;
+  color: var(--orange);
+  font-size: 12px;
+}
+.wwa-section ol {
+  padding: 0 0 0 24px;
+  margin: 0 0 16px 0;
+}
+.wwa-section ol li {
+  padding: 4px 0;
+  color: var(--text-mid);
+  font-size: 14px;
+  line-height: 1.6;
+}
+.wwa-section ol li::marker {
+  color: var(--orange);
+  font-family: 'Satoshi', sans-serif;
+  font-weight: 600;
+}
+.wwa-callout {
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--orange);
+  border-radius: 8px;
+  padding: 16px 20px;
+  margin: 20px 0;
+}
+.wwa-callout p { margin-bottom: 8px; }
+.wwa-callout p:last-child { margin-bottom: 0; }
+.wwa-notable-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  margin: 12px 0 16px;
+}
+.wwa-notable-item {
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 12px 16px;
+}
+.wwa-notable-item .name {
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--text);
+}
+.wwa-notable-item .detail {
+  font-family: 'Satoshi', sans-serif;
+  font-size: 11px;
+  color: var(--text-dim);
+  margin-top: 2px;
+}
+.wwa-case-card {
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 14px 18px;
+  margin-bottom: 10px;
+}
+.wwa-case-card .case-name {
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--text);
+}
+.wwa-case-card .case-detail {
+  font-size: 13px;
+  color: var(--text-dim);
+  margin-top: 2px;
+}
+.wwa-priority-list {
+  counter-reset: priorities;
+}
+.wwa-priority-list li {
+  counter-increment: priorities;
+  position: relative;
+  padding: 10px 0 10px 40px !important;
+  border-bottom: 1px solid var(--border);
+}
+.wwa-priority-list li:last-child { border-bottom: none; }
+.wwa-priority-list li::before {
+  content: counter(priorities) !important;
+  position: absolute;
+  left: 0;
+  top: 10px;
+  width: 24px;
+  height: 24px;
+  background: rgba(192,255,0,0.12);
+  color: var(--orange);
+  font-family: 'Satoshi', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ─── TABLES ─── */
+.data-table { width: 100%; border-collapse: collapse; }
+.data-table th {
+  font-family: 'Satoshi', sans-serif; font-size: 11px;
+  color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.5px;
+  text-align: left; padding: 10px 14px; border-bottom: 1px solid var(--border);
+  font-weight: 600;
+}
+.data-table td {
+  padding: 12px 14px; border-bottom: 1px solid var(--border);
+  font-size: 14px; color: var(--text-mid);
+}
+.data-table tr:last-child td { border-bottom: none; }
+.data-table tr:hover td { background: var(--surface-2); }
+.data-table .num { font-family: 'Satoshi', sans-serif; font-weight: 500; }
+.data-table .up { color: var(--green); }
+.data-table .down { color: var(--red); }
+.data-table .neutral { color: var(--text-dim); }
+.total-row td { font-weight: 600; color: var(--text); border-top: 2px solid var(--border-bright); }
+
+/* ─── KPI STRIP ─── */
+.kpi-card {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 24px; padding: 24px; text-align: center;
+  transition: border-color 0.2s;
+}
+.kpi-card:hover { border-color: rgba(192,255,0,0.2); }
+.kpi-val {
+  font-family: 'Satoshi', sans-serif; font-weight: 600;
+  font-size: 32px; line-height: 1; margin-bottom: 6px;
+}
+.kpi-label {
+  font-family: 'Satoshi', sans-serif; font-size: 11px;
+  color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.5px;
+}
+.kpi-trend {
+  font-family: 'Satoshi', sans-serif; font-size: 12px;
+  margin-top: 8px;
+}
+
+/* ─── BAR CHART ─── */
+.bar-chart { display: flex; flex-direction: column; gap: 12px; }
+.bar-row { display: flex; align-items: center; gap: 12px; }
+.bar-label {
+  font-family: 'Satoshi', sans-serif; font-size: 12px;
+  color: var(--text-mid); width: 130px; text-align: right; flex-shrink: 0;
+}
+.bar-track { flex: 1; height: 22px; background: var(--surface-3); border-radius: 4px; overflow: hidden; position: relative; }
+.bar-fill { height: 100%; border-radius: 4px; transition: width 0.5s ease; min-width: 2px; }
+.bar-val {
+  font-family: 'Satoshi', sans-serif; font-size: 12px;
+  color: var(--text-mid); width: 50px; flex-shrink: 0;
+}
+
+/* ─── GOAL PROGRESS ─── */
+.goal-progress-track {
+  height: 8px; background: var(--surface-3); border-radius: 4px; overflow: hidden; margin-top: 6px;
+}
+.goal-progress-fill { height: 100%; border-radius: 4px; }
+.gp-green { background: var(--green); }
+.gp-amber { background: var(--amber); }
+.gp-red { background: var(--red); }
+
+/* ─── CALENDAR ─── */
+.cal-grid {
+  display: grid; grid-template-columns: repeat(7, 1fr); gap: 2px;
+}
+.cal-header {
+  font-family: 'Satoshi', sans-serif; font-size: 11px;
+  color: var(--text-dim); text-align: center; padding: 8px 4px;
+  text-transform: uppercase;
+}
+.cal-day {
+  background: var(--surface-2); border: 1px solid var(--border);
+  border-radius: 6px; min-height: 90px; padding: 6px 8px;
+  font-size: 12px; position: relative;
+}
+.cal-day.empty { background: transparent; border-color: transparent; }
+.cal-day .day-num {
+  font-family: 'Satoshi', sans-serif; font-size: 12px;
+  color: var(--text-dim); margin-bottom: 4px;
+}
+.cal-day.today { border-color: var(--orange); box-shadow: 0 0 8px rgba(192,255,0,0.15); }
+.cal-day.launch { border-color: var(--orange); background: rgba(192,255,0,0.06); box-shadow: 0 0 12px rgba(192,255,0,0.1); }
+.cal-pill {
+  font-family: 'Satoshi', sans-serif; font-size: 9px;
+  padding: 2px 6px; border-radius: 4px; margin-bottom: 2px;
+  display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.pill-orange { background: rgba(192,255,0,0.15); color: var(--orange); }
+.pill-teal { background: rgba(45,212,191,0.15); color: var(--teal); }
+.pill-green { background: rgba(52,211,153,0.15); color: var(--green); }
+.pill-amber { background: rgba(245,158,11,0.15); color: var(--amber); }
+.pill-rose { background: rgba(192,255,0,0.15); color: var(--rose); }
+.pill-blue { background: rgba(75,139,255,0.15); color: var(--blue); }
+.pill-purple { background: rgba(167,139,250,0.15); color: var(--purple); }
+
+/* ─── SWATCH ─── */
+.swatch-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 12px; }
+.swatch {
+  display: flex; align-items: center; gap: 12px;
+  padding: 12px; background: var(--surface-2); border: 1px solid var(--border);
+  border-radius: 8px;
+}
+.swatch-color { width: 36px; height: 36px; border-radius: 6px; flex-shrink: 0; }
+.swatch-info { font-size: 12px; }
+.swatch-info .swatch-name { font-weight: 600; color: var(--text); margin-bottom: 2px; }
+.swatch-info .swatch-hex { font-family: 'Satoshi', sans-serif; color: var(--text-dim); font-size: 11px; }
+
+/* ─── FONT SPECIMEN ─── */
+.font-specimen { margin-bottom: 16px; padding: 16px; background: var(--surface-2); border-radius: 8px; border: 1px solid var(--border); }
+.font-specimen .spec-label { font-family: 'Satoshi', sans-serif; font-size: 11px; color: var(--text-dim); margin-bottom: 6px; }
+
+/* ─── PERSONAL OUTREACH TABLE ─── */
+.outreach-table td select,
+.outreach-table td input {
+  background: var(--surface-3); border: 1px solid var(--border);
+  color: var(--text-mid); font-family: 'Satoshi', sans-serif;
+  font-size: 12px; padding: 4px 8px; border-radius: 4px;
+}
+
+/* ─── CHANNEL CARD ─── */
+.channel-card { padding: 0; overflow: hidden; border-radius: 24px; }
+.channel-card .ch-header { padding: 18px 22px; }
+.channel-card .ch-body { padding: 0 22px 22px; }
+.channel-card .ch-name { font-weight: 700; font-size: 17px; margin-bottom: 2px; }
+.channel-card .ch-owner { font-family: 'Satoshi', sans-serif; font-size: 11px; color: var(--text-dim); }
+.ch-stat-row { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid var(--border); font-size: 13px; }
+.ch-stat-row:last-child { border-bottom: none; }
+.ch-stat-label { color: var(--text-dim); }
+.ch-stat-val { font-family: 'Satoshi', sans-serif; font-weight: 500; }
+
+/* ─── DATA INDICATOR ─── */
+.data-indicator {
+  font-family: 'Satoshi', sans-serif; font-size: 12px; font-weight: 500;
+  color: var(--orange); background: rgba(192,255,0,0.06);
+  border: 1px solid rgba(192,255,0,0.2); border-radius: 12px;
+  padding: 10px 16px; margin-bottom: 24px;
+}
+
+/* ─── POST FORMULA ─── */
+.post-formula-demo {
+  width: 320px; min-height: 400px; background: var(--surface-3);
+  border-radius: 24px; border: 1px solid var(--border);
+  padding: 24px; position: relative; overflow: hidden;
+}
+.post-formula-demo::before {
+  content: ''; position: absolute; inset: 0;
+  background: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  opacity: 0.03; pointer-events: none;
+}
+
+/* ─── HOME PAGE ─── */
+.home-nav-link {
+  display: flex; align-items: center; gap: 10px;
+  background: none; border: none;
+  padding: 10px 14px; border-radius: 12px;
+  font-family: 'Satoshi', sans-serif; font-size: 14px; font-weight: 500;
+  color: var(--text-mid); cursor: pointer;
+  transition: all 0.15s; text-align: left; width: 100%;
+}
+.home-nav-link:hover { background: rgba(255,255,255,0.03); color: #fff; }
+.home-nav-link iconify-icon { font-size: 16px; color: var(--text-dim); transition: color 0.15s; }
+.home-nav-link:hover iconify-icon { color: var(--orange); }
+.home-channel-row {
+  display: flex; align-items: center; gap: 12px;
+  padding: 8px 12px; border-radius: 10px;
+  transition: background 0.15s;
+}
+.home-channel-row:hover { background: rgba(255,255,255,0.02); }
+
+/* ─── FUNNEL ─── */
+.funnel-wrap { display:flex; flex-direction:column; align-items:center; gap:0; padding:20px 0; }
+.funnel-stage {
+  display:flex; align-items:center; justify-content:center; gap:14px;
+  padding:22px 28px; position:relative; text-align:center;
+  border:1px solid transparent; transition: transform 0.2s;
+}
+.funnel-stage:hover { transform: scale(1.02); }
+.funnel-stage-1 {
+  width:100%; max-width:520px; border-radius:20px 20px 0 0;
+  background: linear-gradient(135deg, rgba(192,255,0,0.08), rgba(59,130,246,0.06));
+  border-color: rgba(192,255,0,0.2);
+}
+.funnel-stage-2 {
+  width:78%; max-width:410px;
+  background: linear-gradient(135deg, rgba(168,85,247,0.08), rgba(59,130,246,0.06));
+  border-color: rgba(168,85,247,0.2);
+}
+.funnel-stage-3 {
+  width:56%; max-width:300px; border-radius:0 0 20px 20px;
+  background: linear-gradient(135deg, rgba(74,222,128,0.1), rgba(45,212,191,0.06));
+  border-color: rgba(74,222,128,0.25);
+}
+.funnel-layout { display:flex; align-items:center; gap:24px; justify-content:center; }
+.funnel-main { flex:1; max-width:560px; }
+.funnel-side {
+  width:220px; flex-shrink:0; padding:20px; border-radius:20px;
+  background: rgba(59,130,246,0.05); border:1px dashed rgba(59,130,246,0.25);
+  text-align:center; position:relative;
+}
+.funnel-side-arrow {
+  position:absolute; left:-24px; top:50%; transform:translateY(-50%);
+  color:var(--blue); font-size:20px; display:flex; align-items:center;
+}
+@media (max-width:900px) {
+  .funnel-layout { flex-direction:column; }
+  .funnel-side { width:100%; max-width:400px; }
+  .funnel-side-arrow { display:none; }
+}
+.funnel-arrow {
+  display:flex; align-items:center; justify-content:center;
+  font-size:18px; color:var(--text-dim); padding:4px 0;
+}
+.funnel-icons { display:flex; gap:10px; align-items:center; flex-shrink:0; }
+.funnel-icon-circle {
+  width:36px; height:36px; border-radius:50%; display:flex; align-items:center; justify-content:center;
+  background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.08);
+}
+.funnel-icon-circle iconify-icon { font-size:17px; }
+.funnel-label { text-align:left; }
+.funnel-label-title { font-weight:700; font-size:15px; color:#fff; margin-bottom:2px; }
+.funnel-label-desc { font-size:12px; color:var(--text-dim); }
+.funnel-metric { font-family:'Satoshi',sans-serif; font-weight:700; font-size:22px; margin-left:auto; flex-shrink:0; }
+
+/* ─── FOOTER ─── */
+.footer {
+  text-align: center; padding: 32px 0 16px;
+  font-family: 'Satoshi', sans-serif; font-size: 11px;
+  color: var(--text-dim); letter-spacing: 0.5px;
+}
+
+/* ─── RESPONSIVE ─── */
+@media (max-width: 1100px) {
+  .grid-6 { grid-template-columns: repeat(3, 1fr); }
+  .grid-4 { grid-template-columns: repeat(2, 1fr); }
+  .grid-3 { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 768px) {
+  .app-shell { grid-template-columns: 1fr; }
+  .sidebar {
+    position: fixed; left: -260px; top: 0; width: 250px;
+    transition: left 0.25s ease; z-index: 200;
+  }
+  .sidebar.open { left: 0; }
+  .main { padding: 20px 16px; max-height: none; }
+  .grid-6, .grid-4, .grid-3, .grid-2 { grid-template-columns: 1fr; }
+  .countdown-digits { gap: 12px; }
+  .cd-num { font-size: 36px; }
+  .kpi-val { font-size: 24px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════ NAV ═══════════════════ -->
+<div class="app-shell">
+
+<!-- Left Sidebar -->
+<aside class="sidebar" id="appSidebar">
+  <div class="sidebar-logo">
+    <img src="assets/a8i-dark-transparent.svg" alt="A8I" style="height:40px;width:auto;">
+    <div class="logo-text">
+      <span class="brand">Activ8</span>
+      <span class="sub">Marketing HQ</span>
+    </div>
+  </div>
+  <div class="sidebar-date mono" id="navDate"></div>
+  <div class="sidebar-label">Navigation</div>
+  <div class="sidebar-nav" id="tabBar">
+    <button class="sidebar-tab active" data-tab="home"><span class="st-icon"><iconify-icon icon="lucide:layout-dashboard"></iconify-icon></span> Home</button>
+    <button class="sidebar-tab" data-tab="launch"><span class="st-icon"><iconify-icon icon="lucide:rocket"></iconify-icon></span> Launch Planning</button>
+    <button class="sidebar-tab" data-tab="metrics"><span class="st-icon"><iconify-icon icon="lucide:bar-chart-3"></iconify-icon></span> Metrics</button>
+    <button class="sidebar-tab" data-tab="goals"><span class="st-icon"><iconify-icon icon="lucide:target"></iconify-icon></span> Campaign Goals</button>
+    <button class="sidebar-tab" data-tab="calendar"><span class="st-icon"><iconify-icon icon="lucide:calendar"></iconify-icon></span> Content Calendar</button>
+    <button class="sidebar-tab" data-tab="channels"><span class="st-icon"><iconify-icon icon="lucide:megaphone"></iconify-icon></span> Channel Strategy</button>
+    <button class="sidebar-tab" data-tab="budget"><span class="st-icon"><iconify-icon icon="lucide:wallet"></iconify-icon></span> Budget &amp; Spend</button>
+    <button class="sidebar-tab" data-tab="product"><span class="st-icon"><iconify-icon icon="lucide:monitor"></iconify-icon></span> Dashboard Product</button>
+    <button class="sidebar-tab" data-tab="whoweare"><span class="st-icon"><iconify-icon icon="lucide:info"></iconify-icon></span> Who We Are</button>
+  </div>
+</aside>
+
+<!-- Main Content -->
+<div class="main">
+
+<!-- ═══════════════════ TAB 0: HOME ═══════════════════ -->
+<div class="tab-panel active" id="panel-home">
+
+  <!-- Hero Section -->
+  <div style="display:flex;align-items:center;gap:20px;margin-bottom:32px">
+    <img src="assets/a8i-dark-transparent.svg" alt="A8I" style="height:56px;width:auto;">
+    <div>
+      <h1 style="font-family:'General Sans',sans-serif;font-weight:700;font-size:28px;color:#fff;margin-bottom:2px">Activ8 Insights — Marketing HQ</h1>
+      <p style="font-family:'Satoshi',sans-serif;font-size:14px;color:var(--text-dim)">The Short Side of Wall Street™ · Internal Dashboard</p>
+    </div>
+  </div>
+
+  <!-- Launch Countdown Banner -->
+  <div style="background:var(--surface);border:1px solid var(--border);border-radius:24px;padding:32px;margin-bottom:28px;position:relative;overflow:hidden">
+    <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 30% 50%, rgba(192,255,0,0.04) 0%, transparent 60%);pointer-events:none"></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:24px;position:relative">
+      <div>
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">
+          <span style="font-family:'Satoshi',sans-serif;font-size:10px;font-weight:700;color:var(--orange);background:rgba(192,255,0,0.1);border:1px solid rgba(192,255,0,0.3);border-radius:8px;padding:3px 12px;letter-spacing:1.5px;text-transform:uppercase">Data Product Hard Launch</span>
+        </div>
+        <div style="font-family:'General Sans',sans-serif;font-weight:700;font-size:24px;color:#fff;margin-bottom:4px">April 2, 2026 · 9:00 AM ET</div>
+        <p style="font-size:13px;color:var(--text-dim)">Subscription data platform goes live. All marketing efforts converge on this date.</p>
+      </div>
+      <div style="display:flex;align-items:center;gap:16px;background:rgba(2,6,23,0.6);border:1px solid var(--border);border-radius:16px;padding:16px 24px">
+        <div style="text-align:center"><div id="home-cd-days" style="font-family:'General Sans',sans-serif;font-weight:700;font-size:36px;color:var(--orange);line-height:1">--</div><div style="font-family:'Satoshi',sans-serif;font-size:10px;font-weight:700;color:var(--text-dim);text-transform:uppercase;margin-top:4px">Days</div></div>
+        <div style="color:var(--border-bright);font-size:24px;font-weight:300">:</div>
+        <div style="text-align:center"><div id="home-cd-hours" style="font-family:'General Sans',sans-serif;font-weight:700;font-size:36px;color:var(--orange);line-height:1">--</div><div style="font-family:'Satoshi',sans-serif;font-size:10px;font-weight:700;color:var(--text-dim);text-transform:uppercase;margin-top:4px">Hours</div></div>
+        <div style="color:var(--border-bright);font-size:24px;font-weight:300">:</div>
+        <div style="text-align:center"><div id="home-cd-mins" style="font-family:'General Sans',sans-serif;font-weight:700;font-size:36px;color:var(--orange);line-height:1">--</div><div style="font-family:'Satoshi',sans-serif;font-size:10px;font-weight:700;color:var(--text-dim);text-transform:uppercase;margin-top:4px">Min</div></div>
+        <div style="color:var(--border-bright);font-size:24px;font-weight:300">:</div>
+        <div style="text-align:center"><div id="home-cd-secs" style="font-family:'General Sans',sans-serif;font-weight:700;font-size:36px;color:var(--orange);line-height:1">--</div><div style="font-family:'Satoshi',sans-serif;font-size:10px;font-weight:700;color:var(--text-dim);text-transform:uppercase;margin-top:4px">Sec</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Key Metrics at a Glance -->
+  <div class="section-title">Key Metrics</div>
+  <div class="section-sub">February 2026 baseline · All channels</div>
+  <div class="grid-4" style="margin-bottom:32px">
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:24px;padding:24px;transition:border-color 0.2s" onmouseover="this.style.borderColor='rgba(192,255,0,0.2)'" onmouseout="this.style.borderColor='var(--border)'">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px"><iconify-icon icon="lucide:eye" style="color:var(--blue);font-size:18px"></iconify-icon><span style="font-size:11px;font-weight:700;color:var(--text-dim);text-transform:uppercase;letter-spacing:1px">Website Visitors</span></div>
+      <div style="font-family:'General Sans',sans-serif;font-weight:700;font-size:32px;color:#fff;margin-bottom:4px">741</div>
+      <div style="display:flex;align-items:center;gap:4px;font-size:12px;font-weight:700;color:var(--green)"><iconify-icon icon="lucide:trending-up"></iconify-icon> +46% MoM</div>
+      <div style="margin-top:12px;width:100%;background:var(--surface-3);height:4px;border-radius:99px"><div style="background:var(--blue);height:100%;border-radius:99px;width:74%"></div></div>
+      <div style="font-size:10px;color:var(--text-dim);margin-top:4px">Goal: 1,000</div>
+    </div>
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:24px;padding:24px;transition:border-color 0.2s" onmouseover="this.style.borderColor='rgba(192,255,0,0.2)'" onmouseout="this.style.borderColor='var(--border)'">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px"><iconify-icon icon="lucide:mail" style="color:var(--purple);font-size:18px"></iconify-icon><span style="font-size:11px;font-weight:700;color:var(--text-dim);text-transform:uppercase;letter-spacing:1px">Newsletter Subs</span></div>
+      <div style="font-family:'General Sans',sans-serif;font-weight:700;font-size:32px;color:#fff;margin-bottom:4px">606</div>
+      <div style="display:flex;align-items:center;gap:4px;font-size:12px;font-weight:700;color:var(--green)"><iconify-icon icon="lucide:trending-up"></iconify-icon> Growing</div>
+      <div style="margin-top:12px;width:100%;background:var(--surface-3);height:4px;border-radius:99px"><div style="background:var(--purple);height:100%;border-radius:99px;width:61%"></div></div>
+      <div style="font-size:10px;color:var(--text-dim);margin-top:4px">Goal: 1,000</div>
+    </div>
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:24px;padding:24px;transition:border-color 0.2s" onmouseover="this.style.borderColor='rgba(192,255,0,0.2)'" onmouseout="this.style.borderColor='var(--border)'">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px"><iconify-icon icon="lucide:users" style="color:var(--orange);font-size:18px"></iconify-icon><span style="font-size:11px;font-weight:700;color:var(--text-dim);text-transform:uppercase;letter-spacing:1px">Social Followers</span></div>
+      <div style="font-family:'General Sans',sans-serif;font-weight:700;font-size:32px;color:#fff;margin-bottom:4px">248</div>
+      <div style="display:flex;align-items:center;gap:4px;font-size:12px;font-weight:700;color:var(--green)"><iconify-icon icon="lucide:trending-up"></iconify-icon> Growing</div>
+      <div style="margin-top:12px;width:100%;background:var(--surface-3);height:4px;border-radius:99px"><div style="background:var(--orange);height:100%;border-radius:99px;width:14%;box-shadow:0 0 8px rgba(192,255,0,0.3)"></div></div>
+      <div style="font-size:10px;color:var(--text-dim);margin-top:4px">Goal: 1,750 combined</div>
+    </div>
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:24px;padding:24px;transition:border-color 0.2s" onmouseover="this.style.borderColor='rgba(192,255,0,0.2)'" onmouseout="this.style.borderColor='var(--border)'">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px"><iconify-icon icon="lucide:activity" style="color:var(--cyan);font-size:18px"></iconify-icon><span style="font-size:11px;font-weight:700;color:var(--text-dim);text-transform:uppercase;letter-spacing:1px">Impressions</span></div>
+      <div style="font-family:'General Sans',sans-serif;font-weight:700;font-size:32px;color:#fff;margin-bottom:4px">1,467</div>
+      <div style="display:flex;align-items:center;gap:4px;font-size:12px;font-weight:700;color:var(--text-dim)">— Feb baseline</div>
+      <div style="margin-top:12px;width:100%;background:var(--surface-3);height:4px;border-radius:99px"><div style="background:var(--cyan);height:100%;border-radius:99px;width:29%"></div></div>
+      <div style="font-size:10px;color:var(--text-dim);margin-top:4px">Goal: 5,000/mo</div>
+    </div>
+  </div>
+
+  <!-- Two Column: Quick Nav + Channel Breakdown -->
+  <div class="grid-2" style="margin-bottom:32px">
+
+    <!-- Quick Navigation -->
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:24px;padding:28px">
+      <div style="font-family:'General Sans',sans-serif;font-weight:700;font-size:17px;color:#fff;margin-bottom:16px;display:flex;align-items:center;gap:8px"><iconify-icon icon="lucide:compass" style="color:var(--orange)"></iconify-icon> Quick Navigation</div>
+      <div style="display:flex;flex-direction:column;gap:6px">
+        <button class="home-nav-link" onclick="goTab('launch')"><iconify-icon icon="lucide:rocket"></iconify-icon> Launch Readiness Checklist<span style="margin-left:auto;font-size:11px;color:var(--text-dim)">0 / 28 items</span></button>
+        <button class="home-nav-link" onclick="goTab('metrics')"><iconify-icon icon="lucide:bar-chart-3"></iconify-icon> Full Analytics Dashboard<span style="margin-left:auto;font-size:11px;color:var(--text-dim)">Feb 2026</span></button>
+        <button class="home-nav-link" onclick="goTab('goals')"><iconify-icon icon="lucide:target"></iconify-icon> Campaign Goals &amp; Targets<span style="margin-left:auto;font-size:11px;color:var(--text-dim)">Q2 targets</span></button>
+        <button class="home-nav-link" onclick="goTab('calendar')"><iconify-icon icon="lucide:calendar"></iconify-icon> Content Calendar<span style="margin-left:auto;font-size:11px;color:var(--text-dim)">April 2026</span></button>
+        <button class="home-nav-link" onclick="goTab('channels')"><iconify-icon icon="lucide:megaphone"></iconify-icon> Channel Strategy<span style="margin-left:auto;font-size:11px;color:var(--text-dim)">6 channels</span></button>
+        <button class="home-nav-link" onclick="goTab('budget')"><iconify-icon icon="lucide:wallet"></iconify-icon> Budget &amp; Spend<span style="margin-left:auto;font-size:11px;color:var(--text-dim)">$1,500/mo</span></button>
+        <button class="home-nav-link" onclick="goTab('product')"><iconify-icon icon="lucide:monitor"></iconify-icon> Dashboard Product<span style="margin-left:auto;font-size:11px;color:var(--text-dim)">Pricing &amp; features</span></button>
+      </div>
+    </div>
+
+    <!-- Channel Health -->
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:24px;padding:28px">
+      <div style="font-family:'General Sans',sans-serif;font-weight:700;font-size:17px;color:#fff;margin-bottom:16px;display:flex;align-items:center;gap:8px"><iconify-icon icon="lucide:signal" style="color:var(--green)"></iconify-icon> Channel Health</div>
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <div class="home-channel-row">
+          <iconify-icon icon="simple-icons:x" style="font-size:16px;color:var(--text-mid)"></iconify-icon>
+          <span style="font-size:14px;font-weight:500;color:var(--text);flex:1">X / Twitter</span>
+          <span style="font-family:'Satoshi',sans-serif;font-size:13px;font-weight:600;color:var(--text-mid)">211 followers</span>
+          <span style="font-size:10px;font-weight:700;padding:2px 8px;border-radius:6px;background:rgba(192,255,0,0.1);color:var(--orange);text-transform:uppercase;letter-spacing:0.5px">Primary</span>
+        </div>
+        <div class="home-channel-row">
+          <iconify-icon icon="simple-icons:instagram" style="font-size:16px;color:var(--text-mid)"></iconify-icon>
+          <span style="font-size:14px;font-weight:500;color:var(--text);flex:1">Instagram</span>
+          <span style="font-family:'Satoshi',sans-serif;font-size:13px;font-weight:600;color:var(--text-mid)">17 followers</span>
+          <span style="font-size:10px;font-weight:700;padding:2px 8px;border-radius:6px;background:rgba(168,85,247,0.15);color:var(--purple);text-transform:uppercase;letter-spacing:0.5px">Growing</span>
+        </div>
+        <div class="home-channel-row">
+          <iconify-icon icon="lucide:mail" style="font-size:16px;color:var(--text-mid)"></iconify-icon>
+          <span style="font-size:14px;font-weight:500;color:var(--text);flex:1">Newsletter</span>
+          <span style="font-family:'Satoshi',sans-serif;font-size:13px;font-weight:600;color:var(--text-mid)">606 subs</span>
+          <span style="font-size:10px;font-weight:700;padding:2px 8px;border-radius:6px;background:rgba(74,222,128,0.15);color:var(--green);text-transform:uppercase;letter-spacing:0.5px">Strong</span>
+        </div>
+        <div class="home-channel-row">
+          <iconify-icon icon="simple-icons:tiktok" style="font-size:16px;color:var(--text-mid)"></iconify-icon>
+          <span style="font-size:14px;font-weight:500;color:var(--text);flex:1">TikTok</span>
+          <span style="font-family:'Satoshi',sans-serif;font-size:13px;font-weight:600;color:var(--text-mid)">0 followers</span>
+          <span style="font-size:10px;font-weight:700;padding:2px 8px;border-radius:6px;background:rgba(59,130,246,0.15);color:var(--blue);text-transform:uppercase;letter-spacing:0.5px">New</span>
+        </div>
+        <div class="home-channel-row">
+          <iconify-icon icon="simple-icons:linkedin" style="font-size:16px;color:var(--text-mid)"></iconify-icon>
+          <span style="font-size:14px;font-weight:500;color:var(--text);flex:1">LinkedIn</span>
+          <span style="font-family:'Satoshi',sans-serif;font-size:13px;font-weight:600;color:var(--text-mid)">19 followers</span>
+          <span style="font-size:10px;font-weight:700;padding:2px 8px;border-radius:6px;background:rgba(59,130,246,0.15);color:var(--blue);text-transform:uppercase;letter-spacing:0.5px">New</span>
+        </div>
+        <div class="home-channel-row">
+          <iconify-icon icon="simple-icons:facebook" style="font-size:16px;color:var(--text-mid)"></iconify-icon>
+          <span style="font-size:14px;font-weight:500;color:var(--text);flex:1">Facebook</span>
+          <span style="font-family:'Satoshi',sans-serif;font-size:13px;font-weight:600;color:var(--text-mid)">1 follower</span>
+          <span style="font-size:10px;font-weight:700;padding:2px 8px;border-radius:6px;background:rgba(100,116,139,0.15);color:var(--text-dim);text-transform:uppercase;letter-spacing:0.5px">Low</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Top Priorities -->
+  <div style="background:var(--surface);border:1px solid var(--border);border-radius:24px;padding:28px;margin-bottom:28px">
+    <div style="font-family:'General Sans',sans-serif;font-weight:700;font-size:17px;color:#fff;margin-bottom:16px;display:flex;align-items:center;gap:8px"><iconify-icon icon="lucide:flame" style="color:var(--orange)"></iconify-icon> Top Priorities Before Launch</div>
+    <div class="grid-3">
+      <div style="background:rgba(2,6,23,0.6);border:1px solid var(--border);border-radius:16px;padding:20px">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">
+          <iconify-icon icon="lucide:code" style="color:var(--blue);font-size:18px"></iconify-icon>
+          <span style="font-size:14px;font-weight:600;color:#fff">Platform Ready</span>
+        </div>
+        <p style="font-size:13px;color:var(--text-dim);line-height:1.5;margin-bottom:12px">Payment flow, onboarding, dashboard, and data pipeline all tested and live.</p>
+        <div style="display:flex;align-items:center;gap:6px">
+          <span style="font-size:10px;font-weight:700;padding:2px 8px;border-radius:6px;background:rgba(59,130,246,0.15);color:var(--blue);text-transform:uppercase">Kai</span>
+          <span style="font-size:10px;font-weight:700;padding:2px 8px;border-radius:6px;background:rgba(192,255,0,0.1);color:var(--orange);text-transform:uppercase">Critical</span>
+        </div>
+      </div>
+      <div style="background:rgba(2,6,23,0.6);border:1px solid var(--border);border-radius:16px;padding:20px">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">
+          <iconify-icon icon="lucide:mail-check" style="color:var(--purple);font-size:18px"></iconify-icon>
+          <span style="font-size:14px;font-weight:600;color:#fff">Email Sequence</span>
+        </div>
+        <p style="font-size:13px;color:var(--text-dim);line-height:1.5;margin-bottom:12px">3-email launch drip starting April 2. Welcome, Playbook, Tips & Tricks.</p>
+        <div style="display:flex;align-items:center;gap:6px">
+          <span style="font-size:10px;font-weight:700;padding:2px 8px;border-radius:6px;background:rgba(192,255,0,0.1);color:var(--orange);text-transform:uppercase">Will</span>
+          <span style="font-size:10px;font-weight:700;padding:2px 8px;border-radius:6px;background:rgba(245,158,11,0.15);color:var(--amber);text-transform:uppercase">In Progress</span>
+        </div>
+      </div>
+      <div style="background:rgba(2,6,23,0.6);border:1px solid var(--border);border-radius:16px;padding:20px">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">
+          <iconify-icon icon="lucide:share-2" style="color:var(--green);font-size:18px"></iconify-icon>
+          <span style="font-size:14px;font-weight:600;color:#fff">Social Blitz</span>
+        </div>
+        <p style="font-size:13px;color:var(--text-dim);line-height:1.5;margin-bottom:12px">Coordinated launch-week content across X, IG, TikTok, LinkedIn, and newsletter.</p>
+        <div style="display:flex;align-items:center;gap:6px">
+          <span style="font-size:10px;font-weight:700;padding:2px 8px;border-radius:6px;background:rgba(168,85,247,0.15);color:var(--purple);text-transform:uppercase">CloseUp</span>
+          <span style="font-size:10px;font-weight:700;padding:2px 8px;border-radius:6px;background:rgba(245,158,11,0.15);color:var(--amber);text-transform:uppercase">Planning</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Team -->
+  <div style="background:var(--surface);border:1px solid var(--border);border-radius:24px;padding:28px;margin-bottom:28px">
+    <div style="font-family:'General Sans',sans-serif;font-weight:700;font-size:17px;color:#fff;margin-bottom:16px;display:flex;align-items:center;gap:8px"><iconify-icon icon="lucide:users" style="color:var(--teal)"></iconify-icon> Team</div>
+    <div class="grid-3">
+      <div style="display:flex;align-items:center;gap:12px;padding:12px;border-radius:12px;background:rgba(2,6,23,0.4)">
+        <div style="width:36px;height:36px;border-radius:10px;background:rgba(192,255,0,0.1);display:flex;align-items:center;justify-content:center;font-weight:700;color:var(--orange);font-size:14px">W</div>
+        <div><div style="font-weight:600;font-size:14px;color:#fff">Will</div><div style="font-size:11px;color:var(--text-dim)">Founder · Content, Strategy, Biz</div></div>
+      </div>
+      <div style="display:flex;align-items:center;gap:12px;padding:12px;border-radius:12px;background:rgba(2,6,23,0.4)">
+        <div style="width:36px;height:36px;border-radius:10px;background:rgba(59,130,246,0.15);display:flex;align-items:center;justify-content:center;font-weight:700;color:var(--blue);font-size:14px">K</div>
+        <div><div style="font-weight:600;font-size:14px;color:#fff">Kai</div><div style="font-size:11px;color:var(--text-dim)">CTO · Platform, Tech, Data</div></div>
+      </div>
+      <div style="display:flex;align-items:center;gap:12px;padding:12px;border-radius:12px;background:rgba(2,6,23,0.4)">
+        <div style="width:36px;height:36px;border-radius:10px;background:rgba(168,85,247,0.15);display:flex;align-items:center;justify-content:center;overflow:hidden"><img src="assets/Closeup_white_Icon.webp" alt="CloseUp" style="width:26px;height:26px;object-fit:contain"></div>
+        <div><div style="font-weight:600;font-size:14px;color:#fff">CloseUp</div><div style="font-size:11px;color:var(--text-dim)">Agency · Social, Design, Ads</div></div>
+      </div>
+      <div style="display:flex;align-items:center;gap:12px;padding:12px;border-radius:12px;background:rgba(2,6,23,0.4)">
+        <div style="width:36px;height:36px;border-radius:10px;background:rgba(45,212,191,0.15);display:flex;align-items:center;justify-content:center;font-weight:700;color:var(--teal);font-size:14px">M</div>
+        <div><div style="font-weight:600;font-size:14px;color:#fff">Matt</div><div style="font-size:11px;color:var(--text-dim)">Advisor · PR, Media</div></div>
+      </div>
+      <div style="display:flex;align-items:center;gap:12px;padding:12px;border-radius:12px;background:rgba(2,6,23,0.4)">
+        <div style="width:36px;height:36px;border-radius:10px;background:rgba(34,211,238,0.15);display:flex;align-items:center;justify-content:center;font-weight:700;color:var(--cyan);font-size:14px">G</div>
+        <div><div style="font-weight:600;font-size:14px;color:#fff">Gabe</div><div style="font-size:11px;color:var(--text-dim)">Content · Trader POV, Video</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">Activ8 Insights · The Short Side of Wall Street™ · Internal Use Only</div>
+</div>
+
+<!-- ═══════════════════ TAB 1: LAUNCH PLANNING ═══════════════════ -->
+<div class="tab-panel" id="panel-launch">
+
+  <div class="section-title">Launch Planning</div>
+  <div class="section-sub">Everything we need to execute for the April 2nd platform launch.</div>
+
+  <!-- Launch Intro -->
+  <div class="card card-accent" style="margin-bottom:28px">
+    <h4 style="font-weight:700;font-size:20px;margin-bottom:12px">What We're Launching</h4>
+    <p style="font-size:14px;color:var(--text-mid);margin-bottom:16px">On <strong style="color:var(--orange)">April 2, 2026 at 9:00 AM ET</strong>, we are launching the <strong style="color:#fff">Activ8 Insights data platform</strong>: a subscription product that gives retail investors real-time access to our activist short selling database, original news coverage, researcher profiles, customized analytics, and alert system. This is the core revenue product for the company.</p>
+
+    <h5 style="font-size:14px;font-weight:600;margin-bottom:10px;color:#fff">Why This Launch Matters</h5>
+    <div style="display:flex;flex-direction:column;gap:8px;font-size:13px;color:var(--text-mid);margin-bottom:20px">
+      <div style="display:flex;gap:10px"><iconify-icon icon="lucide:trending-up" style="color:var(--orange);font-size:16px;flex-shrink:0;margin-top:2px"></iconify-icon><span>This is our transition from a <strong style="color:#fff">free news operation</strong> to a <strong style="color:#fff">revenue-generating SaaS business</strong>. Every article, social post, and piece of content we've published has been building toward this moment.</span></div>
+      <div style="display:flex;gap:10px"><iconify-icon icon="lucide:users" style="color:var(--blue);font-size:16px;flex-shrink:0;margin-top:2px"></iconify-icon><span>We're targeting <strong style="color:#fff">165 million US retail traders</strong>, not just short sellers. Long investors, dip buyers, squeeze hunters, and fundamental analysts all need this intelligence.</span></div>
+      <div style="display:flex;gap:10px"><iconify-icon icon="lucide:shield" style="color:var(--teal);font-size:16px;flex-shrink:0;margin-top:2px"></iconify-icon><span>Our main competitor (Breakout Point) has <strong style="color:#fff">no marketing team</strong> and charges EUR 79+/mo. We have a window to establish market position before anyone else wakes up.</span></div>
+    </div>
+
+    <h5 style="font-size:14px;font-weight:600;margin-bottom:10px;color:#fff">What Needs to Happen</h5>
+    <div style="display:flex;flex-wrap:wrap;gap:10px;margin-bottom:20px">
+      <div style="flex:1;min-width:200px;padding:14px;border-radius:16px;background:rgba(192,255,0,0.04);border:1px solid rgba(192,255,0,0.1)">
+        <div style="font-weight:600;font-size:13px;color:var(--orange);margin-bottom:4px">Platform Ready</div>
+        <div style="font-size:12px;color:var(--text-dim)">Payment flow, onboarding, alerts, database migration, login security</div>
+      </div>
+      <div style="flex:1;min-width:200px;padding:14px;border-radius:16px;background:rgba(59,130,246,0.04);border:1px solid rgba(59,130,246,0.1)">
+        <div style="font-weight:600;font-size:13px;color:var(--blue);margin-bottom:4px">Marketing Blitz</div>
+        <div style="font-size:12px;color:var(--text-dim)">Email sequences, social campaigns, content calendar, ad creatives, landing page</div>
+      </div>
+      <div style="flex:1;min-width:200px;padding:14px;border-radius:16px;background:rgba(168,85,247,0.04);border:1px solid rgba(168,85,247,0.1)">
+        <div style="font-weight:600;font-size:13px;color:var(--purple);margin-bottom:4px">Legal &amp; Ops</div>
+        <div style="font-size:12px;color:var(--text-dim)">Terms of service, refund policy, Founders tier legal docs, pricing finalized</div>
+      </div>
+    </div>
+
+    <div style="padding:14px 18px;border-radius:12px;background:rgba(192,255,0,0.06);border:1px solid rgba(192,255,0,0.15);display:flex;align-items:center;gap:12px">
+      <iconify-icon icon="lucide:monitor" style="color:var(--orange);font-size:18px;flex-shrink:0"></iconify-icon>
+      <span style="font-size:13px;color:var(--text-mid)">For full product details, features, and pricing tiers, see the <a href="#" onclick="goTab('product');return false;" style="color:var(--orange);font-weight:600;text-decoration:underline;text-underline-offset:2px">Dashboard Product</a> page.</span>
+    </div>
+  </div>
+
+  <!-- 1.1 Countdown -->
+  <div class="countdown-box">
+    <div class="countdown-badge">🔴 T-MINUS</div>
+    <div class="countdown-digits" id="countdown">
+      <div class="cd-unit"><span class="cd-num" id="cd-days">--</span><span class="cd-label">Days</span></div>
+      <div class="cd-unit"><span class="cd-num" id="cd-hours">--</span><span class="cd-label">Hours</span></div>
+      <div class="cd-unit"><span class="cd-num" id="cd-mins">--</span><span class="cd-label">Minutes</span></div>
+      <div class="cd-unit"><span class="cd-num" id="cd-secs">--</span><span class="cd-label">Seconds</span></div>
+    </div>
+    <div class="countdown-sub">Until Data Product Hard Launch</div>
+  </div>
+
+  <!-- 1.2 Checklist -->
+  <div class="card card-accent">
+    <div class="section-title">Launch Readiness Checklist</div>
+    <div class="section-sub">Track every deliverable. Check items as they're completed.</div>
+
+    <div class="progress-wrap">
+      <div class="progress-header">
+        <span class="text-mid" id="checklistStatus">0 of 28 items complete — 0% ready</span>
+        <span class="text-orange mono" id="checklistPct">0%</span>
+      </div>
+      <div class="progress-track"><div class="progress-fill" id="checklistBar" style="width:0%"></div></div>
+    </div>
+
+    <div id="checklistContainer">
+      <!-- Group 1 -->
+      <div class="checklist-group">
+        <div class="checklist-group-title">Payment &amp; Technical <span class="owner-badge badge-kai">Kai</span></div>
+        <label class="checklist-item"><input type="checkbox" data-cl="1"><span class="cl-text">Full payment flow tested end-to-end</span></label>
+        <label class="checklist-item"><input type="checkbox" data-cl="2"><span class="cl-text">Auto-pay functionality confirmed</span></label>
+        <label class="checklist-item"><input type="checkbox" data-cl="3"><span class="cl-text">Refund processing confirmed</span></label>
+        <label class="checklist-item"><input type="checkbox" data-cl="5"><span class="cl-text">Replace reports table with PostgreSQL</span></label>
+        <label class="checklist-item"><input type="checkbox" data-cl="6"><span class="cl-text">Data refresh timestamps visible on dashboard</span></label>
+        <label class="checklist-item"><input type="checkbox" data-cl="7"><span class="cl-text">Alerts feature live (new short report notifications)</span></label>
+        <label class="checklist-item"><input type="checkbox" data-cl="8"><span class="cl-text">First-time user onboarding flow complete</span></label>
+        <label class="checklist-item"><input type="checkbox" data-cl="9"><span class="cl-text">User activity tracking set up (feature usage, session frequency)</span></label>
+      </div>
+      <!-- Group 2 -->
+      <div class="checklist-group">
+        <div class="checklist-group-title">Legal <span class="owner-badge badge-will">Will</span></div>
+        <label class="checklist-item"><input type="checkbox" data-cl="10"><span class="cl-text">Attorney Ken confirms refund policy legality</span></label>
+        <label class="checklist-item"><input type="checkbox" data-cl="11"><span class="cl-text">Terms of service rewritten with final pricing</span></label>
+        <label class="checklist-item"><input type="checkbox" data-cl="12"><span class="cl-text">Founders tier benefits documented legally</span></label>
+      </div>
+      <!-- Group 3 -->
+      <div class="checklist-group">
+        <div class="checklist-group-title">Marketing <span class="owner-badge badge-will">Will</span> <span class="owner-badge badge-closeup">CloseUp</span></div>
+        <label class="checklist-item"><input type="checkbox" data-cl="13"><span class="cl-text">Pricing page live with Breakout Point comparison</span></label>
+        <label class="checklist-item"><input type="checkbox" data-cl="14"><span class="cl-text">Dashboard screenshots on pricing page</span></label>
+        <label class="checklist-item"><input type="checkbox" data-cl="15"><span class="cl-text">Email sequence 1 drafted (personal, from Will)</span></label>
+        <label class="checklist-item"><input type="checkbox" data-cl="16"><span class="cl-text">Email sequence 2 drafted (trader use cases)</span></label>
+        <label class="checklist-item"><input type="checkbox" data-cl="17"><span class="cl-text">Email sequence 3 drafted (tips &amp; tricks)</span></label>
+        <label class="checklist-item"><input type="checkbox" data-cl="18"><span class="cl-text">Dashboard walkthrough video produced (CloseUp)</span></label>
+        <label class="checklist-item"><input type="checkbox" data-cl="19"><span class="cl-text">Instagram launch content ready (CloseUp)</span></label>
+        <label class="checklist-item"><input type="checkbox" data-cl="20"><span class="cl-text">TikTok launch content ready (CloseUp)</span></label>
+        <label class="checklist-item"><input type="checkbox" data-cl="21"><span class="cl-text">Twitter pre-launch teaser posts scheduled</span></label>
+        <label class="checklist-item"><input type="checkbox" data-cl="22"><span class="cl-text">Personal outreach email drafted (Will)</span></label>
+        <label class="checklist-item"><input type="checkbox" data-cl="23"><span class="cl-text">Gabe personal outreach drafted</span></label>
+      </div>
+      <!-- Group 4 -->
+      <div class="checklist-group">
+        <div class="checklist-group-title">PR <span class="owner-badge badge-will">Will</span> <span class="owner-badge badge-matt">Matt</span></div>
+        <label class="checklist-item"><input type="checkbox" data-cl="24"><span class="cl-text">Reporter outreach list built (WSJ, Bloomberg, Reuters, etc.)</span></label>
+        <label class="checklist-item"><input type="checkbox" data-cl="25"><span class="cl-text">PR pitch email drafted (free 1-month license offer)</span></label>
+        <label class="checklist-item"><input type="checkbox" data-cl="26"><span class="cl-text">Outreach started to top 10 reporters</span></label>
+      </div>
+      <!-- Group 5 -->
+      <div class="checklist-group">
+        <div class="checklist-group-title">Content <span class="owner-badge badge-matt">Matt</span></div>
+        <label class="checklist-item"><input type="checkbox" data-cl="27"><span class="cl-text">Matt's 20 backlog articles posted to site</span></label>
+        <label class="checklist-item"><input type="checkbox" data-cl="28"><span class="cl-text">Guide/help page updated</span></label>
+        <label class="checklist-item"><input type="checkbox" data-cl="29"><span class="cl-text">Media recommendations page updated</span></label>
+        <label class="checklist-item"><input type="checkbox" data-cl="30"><span class="cl-text">Gabe's "how I use the dashboard as a trader" piece written</span></label>
+      </div>
+    </div>
+  </div>
+
+  <hr class="section-divider">
+
+  <!-- 1.3 Email Sequence -->
+  <div class="section-title">Launch Email Sequence</div>
+  <div class="section-sub">Three-day drip starting April 2</div>
+  <div class="grid-3" style="margin-bottom:28px">
+    <div class="email-card">
+      <div style="display:flex;justify-content:space-between;align-items:start;margin-bottom:4px">
+        <h4>Day 1: The Personal Note</h4>
+        <span class="status status-draft">Draft in Progress</span>
+      </div>
+      <div class="email-meta">Owner: Will / Gabe / Kai</div>
+      <p><strong>Tone:</strong> Personal, warm, founder-to-subscriber</p>
+      <p><strong>Key message:</strong> We built something. Here's why it matters to you.</p>
+      <div class="cta-line">CTA: Log in and explore the dashboard</div>
+    </div>
+    <div class="email-card">
+      <div style="display:flex;justify-content:space-between;align-items:start;margin-bottom:4px">
+        <h4>Day 2: The Trader's Playbook</h4>
+        <span class="status status-not-started">Not Started</span>
+      </div>
+      <div class="email-meta">Owner: Gabe</div>
+      <p><strong>Tone:</strong> Practical, trader-to-trader</p>
+      <p><strong>Key message:</strong> Here's exactly how I use this dashboard in my own trading</p>
+      <p><strong>Content:</strong> Following a short seller's pattern, sector targeting, building positions</p>
+      <div class="cta-line">CTA: Try these strategies yourself</div>
+    </div>
+    <div class="email-card">
+      <div style="display:flex;justify-content:space-between;align-items:start;margin-bottom:4px">
+        <h4>Day 3: Tips &amp; Tricks</h4>
+        <span class="status status-not-started">Not Started</span>
+      </div>
+      <div class="email-meta">Owner: Will</div>
+      <p><strong>Tone:</strong> Product, educational</p>
+      <p><strong>Key message:</strong> Power features you might have missed</p>
+      <p><strong>Content:</strong> Filters, watchlist, researcher profiles, data refresh, alerts setup</p>
+      <div class="cta-line">CTA: Upgrade to Founders for pre-release data</div>
+    </div>
+  </div>
+
+  <hr class="section-divider">
+
+  <!-- 1.4 Personal Outreach -->
+  <div class="section-title">Personal Network: Every Account Matters</div>
+  <div class="section-sub">Even a free account signup and email open helps. Ask everyone.</div>
+  <div class="card" style="overflow-x:auto">
+    <table class="data-table outreach-table">
+      <thead>
+        <tr><th>Owner</th><th>Target Contacts</th><th>Status</th><th>Notes</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><span class="owner-badge badge-will">Will</span></td><td class="num mono">25</td><td><span class="status status-in-progress">In Progress</span></td><td class="text-dim">Friends, family, college network, FinTwit connections</td></tr>
+        <tr><td><span class="owner-badge badge-gabe">Gabe</span></td><td class="num mono">15</td><td><span class="status status-not-started">Not Started</span></td><td class="text-dim">Trading community, finance friends</td></tr>
+        <tr><td><span class="owner-badge badge-kai">Kai</span></td><td class="num mono">10</td><td><span class="status status-not-started">Not Started</span></td><td class="text-dim">Tech network, startup community</td></tr>
+        <tr><td><span class="owner-badge badge-matt">Matt</span></td><td class="num mono">10</td><td><span class="status status-not-started">Not Started</span></td><td class="text-dim">Journalism contacts, finance media</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <button class="collapsible-btn" onclick="toggleCollapsible(this)">
+    View Personal Outreach Email Template <span class="arrow">▼</span>
+  </button>
+  <div class="collapsible-content">
+    <pre>Subject: I built something — would mean a lot if you checked it out
+
+Hey [Name],
+
+Quick favor to ask. I've been working on something called Activ8 Insights
+for the past couple of years — it's a news platform and data dashboard
+covering activist short selling on Wall Street.
+
+We just launched our data product and even just creating a free account
+and opening our emails genuinely helps us grow. It takes 60 seconds:
+
+  → activ8insights.com
+
+If you want to follow us on Twitter/Instagram that helps too.
+
+No pressure at all — just means a lot to have people in my corner.
+
+Thanks,
+[Name]</pre>
+  </div>
+
+  <hr class="section-divider">
+
+  <!-- 1.5 PR Outreach -->
+  <div class="section-title">PR: Journalist Outreach</div>
+  <div class="section-sub">Reach out to reporters who cite Breakout Point. Offer free 1-month license. Position as the better source.</div>
+  <div class="card" style="overflow-x:auto">
+    <table class="data-table" id="prTable">
+      <thead>
+        <tr><th>Reporter</th><th>Publication</th><th>Topic Focus</th><th>Status</th><th>Owner</th><th>Notes</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>TBD</td><td>Wall Street Journal</td><td>Short selling / markets</td><td><span class="status status-not-started">Not Contacted</span></td><td><span class="owner-badge badge-will">Will</span></td><td class="text-dim">—</td></tr>
+        <tr><td>TBD</td><td>Bloomberg</td><td>Activist investing</td><td><span class="status status-not-started">Not Contacted</span></td><td><span class="owner-badge badge-will">Will</span></td><td class="text-dim">—</td></tr>
+        <tr><td>TBD</td><td>Reuters</td><td>Financial fraud / markets</td><td><span class="status status-not-started">Not Contacted</span></td><td><span class="owner-badge badge-matt">Matt</span></td><td class="text-dim">—</td></tr>
+        <tr><td>TBD</td><td>Financial Times</td><td>Short selling</td><td><span class="status status-not-started">Not Contacted</span></td><td><span class="owner-badge badge-will">Will</span></td><td class="text-dim">—</td></tr>
+        <tr><td>TBD</td><td>Barron's</td><td>Markets</td><td><span class="status status-not-started">Not Contacted</span></td><td><span class="owner-badge badge-matt">Matt</span></td><td class="text-dim">—</td></tr>
+        <tr><td>TBD</td><td>Business Insider</td><td>Finance</td><td><span class="status status-not-started">Not Contacted</span></td><td><span class="owner-badge badge-will">Will</span></td><td class="text-dim">—</td></tr>
+        <tr><td>TBD</td><td>The Information</td><td>Tech shorts</td><td><span class="status status-not-started">Not Contacted</span></td><td><span class="owner-badge badge-matt">Matt</span></td><td class="text-dim">—</td></tr>
+        <tr><td>TBD</td><td>Dealbreaker</td><td>Wall Street</td><td><span class="status status-not-started">Not Contacted</span></td><td><span class="owner-badge badge-will">Will</span></td><td class="text-dim">—</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <button class="collapsible-btn" onclick="toggleCollapsible(this)" style="margin-top:16px">
+    View PR Pitch Email Template <span class="arrow">▼</span>
+  </button>
+  <div class="collapsible-content">
+    <pre>Subject: Better short selling data — free for journalists
+
+Hi [Name],
+
+I've been following your coverage of [topic] — great work on [article].
+
+I wanted to introduce Activ8 Insights (activ8insights.com). We just
+launched a data dashboard tracking 1,048+ activist short reports across
+849 stocks, with journalist-grade sourcing and daily data updates.
+
+We'd love to offer you a free license while you explore it. If you're
+ever writing about short selling campaigns, we're happy to be a resource.
+
+Reply here and I'll set you up.
+
+Will Coz
+Founder, Activ8 Insights</pre>
+  </div>
+
+  <div class="footer">Activ8 Insights · The Short Side of Wall Street™ · Internal Use Only</div>
+</div>
+
+<!-- ═══════════════════ TAB 2: METRICS ═══════════════════ -->
+<div class="tab-panel" id="panel-metrics">
+
+  <div class="data-indicator">🟡 Using baseline data (Feb 2026). Add API keys to CONFIG at the top of this file to go live.</div>
+
+  <!-- 2.1 KPI Strip -->
+  <div class="grid-6" style="margin-bottom:28px">
+    <div class="kpi-card"><div class="kpi-val text-orange">741</div><div class="kpi-label">Website Visitors</div><div class="kpi-trend text-green">▲ +46%</div></div>
+    <div class="kpi-card"><div class="kpi-val text-blue">606</div><div class="kpi-label">Newsletter Subs</div><div class="kpi-trend text-green">▲ Growing</div></div>
+    <div class="kpi-card"><div class="kpi-val text-amber">12%</div><div class="kpi-label">Open Rate</div><div class="kpi-trend text-dim">— Neutral</div></div>
+    <div class="kpi-card"><div class="kpi-val text-teal">248</div><div class="kpi-label">Social Followers</div><div class="kpi-trend text-green">▲ Growing</div></div>
+    <div class="kpi-card"><div class="kpi-val text-purple">1,467</div><div class="kpi-label">Social Impressions</div><div class="kpi-trend text-dim">Feb baseline</div></div>
+    <div class="kpi-card"><div class="kpi-val text-cyan">33</div><div class="kpi-label">Social Interactions</div><div class="kpi-trend text-dim">Feb baseline</div></div>
+  </div>
+
+  <!-- 2.2 Website Analytics -->
+  <div class="section-title">Website Analytics</div>
+  <div class="section-sub">Source: Plausible · activ8insights.com · February 2026</div>
+  <div class="grid-2" style="margin-bottom:28px">
+    <div class="card">
+      <h4 style="font-weight:600;margin-bottom:16px">Core Metrics</h4>
+      <table class="data-table">
+        <thead><tr><th>Metric</th><th>Feb 2026</th><th>Change</th></tr></thead>
+        <tbody>
+          <tr><td>Unique Visitors</td><td class="num mono">741</td><td class="num mono up">+46%</td></tr>
+          <tr><td>Total Visits</td><td class="num mono">811</td><td class="num mono up">+50%</td></tr>
+          <tr><td>Pageviews</td><td class="num mono">1,900</td><td class="num mono up">+66%</td></tr>
+          <tr><td>Views/Visit</td><td class="num mono">2.36</td><td class="num mono up">+10%</td></tr>
+          <tr><td>Bounce Rate</td><td class="num mono">68%</td><td class="num mono down">+3%</td></tr>
+          <tr><td>Avg Duration</td><td class="num mono">2m 20s</td><td class="num mono up">+9%</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="card">
+      <h4 style="font-weight:600;margin-bottom:16px">Traffic Sources</h4>
+      <div class="bar-chart">
+        <div class="bar-row"><span class="bar-label">Direct</span><div class="bar-track"><div class="bar-fill" style="width:100%;background:var(--orange)"></div></div><span class="bar-val">419</span></div>
+        <div class="bar-row"><span class="bar-label">Organic Search</span><div class="bar-track"><div class="bar-fill" style="width:56%;background:var(--blue)"></div></div><span class="bar-val">236</span></div>
+        <div class="bar-row"><span class="bar-label">Email</span><div class="bar-track"><div class="bar-fill" style="width:11%;background:var(--green)"></div></div><span class="bar-val">47</span></div>
+        <div class="bar-row"><span class="bar-label">Organic Social</span><div class="bar-track"><div class="bar-fill" style="width:10%;background:var(--purple)"></div></div><span class="bar-val">42</span></div>
+        <div class="bar-row"><span class="bar-label">Referral</span><div class="bar-track"><div class="bar-fill" style="width:1.4%;background:var(--teal)"></div></div><span class="bar-val">6</span></div>
+      </div>
+      <p style="font-size:12px;color:var(--text-dim);margin-top:16px;font-family:'IBM Plex Mono',monospace">ChatGPT.com drives 44 direct referrals: AEO is working.</p>
+    </div>
+  </div>
+
+  <!-- 2.3 Newsletter -->
+  <div class="section-title">Newsletter Metrics</div>
+  <div class="section-sub">Source: Buttondown · Weekly publication (Sundays)</div>
+  <div class="card" style="margin-bottom:28px">
+    <div style="display:flex;gap:40px;flex-wrap:wrap;margin-bottom:20px">
+      <div><span class="mono text-dim" style="font-size:11px;display:block;margin-bottom:4px">SUBSCRIBERS</span><span class="mono" style="font-size:28px;font-weight:600;color:var(--blue)">606</span></div>
+      <div><span class="mono text-dim" style="font-size:11px;display:block;margin-bottom:4px">OPEN RATE</span><span class="mono" style="font-size:28px;font-weight:600;color:var(--amber)">12%</span></div>
+      <div><span class="mono text-dim" style="font-size:11px;display:block;margin-bottom:4px">CADENCE</span><span class="mono" style="font-size:28px;font-weight:600;color:var(--text-mid)">Weekly</span></div>
+    </div>
+    <p style="font-size:13px;color:var(--text-dim);margin-bottom:16px;font-family:'IBM Plex Mono',monospace">Industry average ~21%. Target: 20%+ by Q3 2026.</p>
+    <div>
+      <div style="display:flex;justify-content:space-between;margin-bottom:6px">
+        <span class="mono text-dim" style="font-size:11px">Progress to 1,000 subscribers</span>
+        <span class="mono text-mid" style="font-size:11px">606 / 1,000</span>
+      </div>
+      <div class="progress-track"><div class="progress-fill green-fill" style="width:60.6%"></div></div>
+    </div>
+  </div>
+
+  <!-- 2.4 Social Cards -->
+  <div class="section-title">Social Media Platforms</div>
+  <div class="section-sub">February 2026 baseline</div>
+  <div class="grid-3" style="margin-bottom:28px">
+    <div class="card channel-card card-accent">
+      <div class="ch-header"><div class="ch-name">X / Twitter</div><div class="ch-owner">Primary Channel · FinTwit</div></div>
+      <div class="ch-body">
+        <div class="ch-stat-row"><span class="ch-stat-label">Followers</span><span class="ch-stat-val">211</span></div>
+        <div class="ch-stat-row"><span class="ch-stat-label">Posts</span><span class="ch-stat-val text-dim">—</span></div>
+        <div class="ch-stat-row"><span class="ch-stat-label">Impressions</span><span class="ch-stat-val text-dim">—</span></div>
+        <div class="ch-stat-row"><span class="ch-stat-label">Interactions</span><span class="ch-stat-val text-dim">—</span></div>
+        <div class="ch-stat-row"><span class="ch-stat-label">Status</span><span class="status status-active">Active</span></div>
+      </div>
+    </div>
+    <div class="card channel-card card-accent-pink">
+      <div class="ch-header"><div class="ch-name">Instagram</div><div class="ch-owner">CloseUp Marketing</div></div>
+      <div class="ch-body">
+        <div class="ch-stat-row"><span class="ch-stat-label">Followers</span><span class="ch-stat-val">17</span></div>
+        <div class="ch-stat-row"><span class="ch-stat-label">Posts</span><span class="ch-stat-val">12</span></div>
+        <div class="ch-stat-row"><span class="ch-stat-label">Impressions</span><span class="ch-stat-val">1,228</span></div>
+        <div class="ch-stat-row"><span class="ch-stat-label">Interactions</span><span class="ch-stat-val">27</span></div>
+        <div class="ch-stat-row"><span class="ch-stat-label">Engagement</span><span class="ch-stat-val text-green">2.2%</span></div>
+        <div class="ch-stat-row"><span class="ch-stat-label">Status</span><span class="status status-active">Active</span></div>
+      </div>
+    </div>
+    <div class="card channel-card card-accent-teal">
+      <div class="ch-header"><div class="ch-name">TikTok</div><div class="ch-owner">CloseUp Marketing</div></div>
+      <div class="ch-body">
+        <div class="ch-stat-row"><span class="ch-stat-label">Followers</span><span class="ch-stat-val">0</span></div>
+        <div class="ch-stat-row"><span class="ch-stat-label">Posts</span><span class="ch-stat-val">7</span></div>
+        <div class="ch-stat-row"><span class="ch-stat-label">Impressions</span><span class="ch-stat-val">154</span></div>
+        <div class="ch-stat-row"><span class="ch-stat-label">Interactions</span><span class="ch-stat-val">4</span></div>
+        <div class="ch-stat-row"><span class="ch-stat-label">Engagement</span><span class="ch-stat-val text-green">2.6%</span></div>
+        <div class="ch-stat-row"><span class="ch-stat-label">Status</span><span class="status status-early">Early Stage</span></div>
+      </div>
+    </div>
+    <div class="card channel-card card-accent-purple">
+      <div class="ch-header"><div class="ch-name">Facebook</div><div class="ch-owner">CloseUp Marketing</div></div>
+      <div class="ch-body">
+        <div class="ch-stat-row"><span class="ch-stat-label">Followers</span><span class="ch-stat-val">1</span></div>
+        <div class="ch-stat-row"><span class="ch-stat-label">Posts</span><span class="ch-stat-val">12</span></div>
+        <div class="ch-stat-row"><span class="ch-stat-label">Impressions</span><span class="ch-stat-val">85</span></div>
+        <div class="ch-stat-row"><span class="ch-stat-label">Interactions</span><span class="ch-stat-val">2</span></div>
+        <div class="ch-stat-row"><span class="ch-stat-label">Engagement</span><span class="ch-stat-val text-green">2.4%</span></div>
+        <div class="ch-stat-row"><span class="ch-stat-label">Status</span><span class="status status-early">Early Stage</span></div>
+      </div>
+    </div>
+    <div class="card channel-card card-accent-cyan">
+      <div class="ch-header"><div class="ch-name">LinkedIn</div><div class="ch-owner">Will</div></div>
+      <div class="ch-body">
+        <div class="ch-stat-row"><span class="ch-stat-label">Followers</span><span class="ch-stat-val">19</span></div>
+        <div class="ch-stat-row"><span class="ch-stat-label">Posts</span><span class="ch-stat-val text-dim">—</span></div>
+        <div class="ch-stat-row"><span class="ch-stat-label">Impressions</span><span class="ch-stat-val text-dim">—</span></div>
+        <div class="ch-stat-row"><span class="ch-stat-label">Interactions</span><span class="ch-stat-val text-dim">—</span></div>
+        <div class="ch-stat-row"><span class="ch-stat-label">Status</span><span class="status status-early">Early Stage</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2.5 Goals vs Actuals -->
+  <div class="section-title">Goals vs. Actuals</div>
+  <div class="section-sub">Q2 2026 targets (June 30) vs. February baseline</div>
+  <div class="card" style="overflow-x:auto">
+    <table class="data-table">
+      <thead><tr><th>Metric</th><th>Feb Baseline</th><th>Q2 Target</th><th>Progress</th><th></th></tr></thead>
+      <tbody>
+        <tr><td>Twitter Followers</td><td class="num mono">211</td><td class="num mono">1,000</td><td class="num mono">21%</td><td style="width:200px"><div class="goal-progress-track"><div class="goal-progress-fill gp-amber" style="width:21%"></div></div></td></tr>
+        <tr><td>Instagram Followers</td><td class="num mono">17</td><td class="num mono">500</td><td class="num mono">3%</td><td><div class="goal-progress-track"><div class="goal-progress-fill gp-red" style="width:3%"></div></div></td></tr>
+        <tr><td>Newsletter Subs</td><td class="num mono">606</td><td class="num mono">1,000</td><td class="num mono">61%</td><td><div class="goal-progress-track"><div class="goal-progress-fill gp-green" style="width:61%"></div></div></td></tr>
+        <tr><td>Website Visitors/mo</td><td class="num mono">741</td><td class="num mono">2,500</td><td class="num mono">30%</td><td><div class="goal-progress-track"><div class="goal-progress-fill gp-amber" style="width:30%"></div></div></td></tr>
+        <tr><td>Paid Subscribers</td><td class="num mono">0</td><td class="num mono">50</td><td class="num mono">0%</td><td><div class="goal-progress-track"><div class="goal-progress-fill gp-red" style="width:0%"></div></div></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="footer">Activ8 Insights · The Short Side of Wall Street™ · Internal Use Only</div>
+</div>
+
+<!-- ═══════════════════ TAB 3: CAMPAIGN GOALS ═══════════════════ -->
+<div class="tab-panel" id="panel-goals">
+  <div class="section-title">2026 Primary Goals</div>
+  <div class="section-sub">Measurable outcomes driving every marketing decision</div>
+  <div class="grid-2" style="margin-bottom:28px">
+    <div class="card card-accent">
+      <h4 style="font-weight:700;font-size:17px;margin-bottom:12px">Goal 1: Launch &amp; Grow the Data Product</h4>
+      <div class="ch-stat-row"><span class="ch-stat-label">Q2 Target</span><span class="ch-stat-val text-orange">50 paid subscribers</span></div>
+      <div class="ch-stat-row"><span class="ch-stat-label">EOY Target</span><span class="ch-stat-val text-orange">200 paid subscribers</span></div>
+      <div class="ch-stat-row"><span class="ch-stat-label">Revenue @ 200</span><span class="ch-stat-val">~$20,000 ARR</span></div>
+      <div class="ch-stat-row"><span class="ch-stat-label">Key Levers</span><span class="ch-stat-val text-dim" style="font-size:12px">Hard launch, email sequence, PR, personal outreach</span></div>
+    </div>
+    <div class="card card-accent-blue">
+      <h4 style="font-weight:700;font-size:17px;margin-bottom:12px">Goal 2: Build Social Presence</h4>
+      <div class="ch-stat-row"><span class="ch-stat-label">Twitter Q2</span><span class="ch-stat-val text-blue">1,000 followers</span></div>
+      <div class="ch-stat-row"><span class="ch-stat-label">Instagram Q2</span><span class="ch-stat-val text-blue">500 followers</span></div>
+      <div class="ch-stat-row"><span class="ch-stat-label">Post Cadence</span><span class="ch-stat-val">30+ posts/mo</span></div>
+      <div class="ch-stat-row"><span class="ch-stat-label">Key Levers</span><span class="ch-stat-val text-dim" style="font-size:12px">CloseUp, content automation, Gabe's Twitter Studio</span></div>
+    </div>
+    <div class="card card-accent-green">
+      <h4 style="font-weight:700;font-size:17px;margin-bottom:12px">Goal 3: Grow Newsletter to 1,000</h4>
+      <div class="ch-stat-row"><span class="ch-stat-label">Current</span><span class="ch-stat-val">606</span></div>
+      <div class="ch-stat-row"><span class="ch-stat-label">Q2 Target</span><span class="ch-stat-val text-green">1,000 subscribers</span></div>
+      <div class="ch-stat-row"><span class="ch-stat-label">Open Rate Goal</span><span class="ch-stat-val text-green">20%+</span></div>
+      <div class="ch-stat-row"><span class="ch-stat-label">Key Levers</span><span class="ch-stat-val text-dim" style="font-size:12px">Meta ads, DM automations, social CTAs, personal outreach</span></div>
+      <div style="margin-top:12px"><div class="goal-progress-track"><div class="goal-progress-fill gp-green" style="width:60.6%"></div></div><div class="mono text-dim" style="font-size:11px;margin-top:4px">606 / 1,000 (60.6%)</div></div>
+    </div>
+    <div class="card card-accent-purple">
+      <h4 style="font-weight:700;font-size:17px;margin-bottom:12px">Goal 4: Establish PR &amp; Media Presence</h4>
+      <div class="ch-stat-row"><span class="ch-stat-label">Citations</span><span class="ch-stat-val text-purple">3+ publications by Q3</span></div>
+      <div class="ch-stat-row"><span class="ch-stat-label">Reporter List</span><span class="ch-stat-val text-purple">20 reporters</span></div>
+      <div class="ch-stat-row"><span class="ch-stat-label">Strategy</span><span class="ch-stat-val text-dim" style="font-size:12px">Free licenses to all target reporters at launch</span></div>
+    </div>
+  </div>
+
+  <hr class="section-divider">
+
+  <div class="section-title">Launch Campaign Goals (April 2)</div>
+  <div class="section-sub">Specific targets for launch week</div>
+  <div class="card card-accent">
+    <div class="grid-3" style="gap:0">
+      <div style="padding:16px;border-right:1px solid var(--border)">
+        <div class="mono text-dim" style="font-size:11px;margin-bottom:4px">DAY 1 EMAIL OPEN RATE</div>
+        <div class="mono" style="font-size:28px;font-weight:600;color:var(--orange)">25%+</div>
+      </div>
+      <div style="padding:16px;border-right:1px solid var(--border)">
+        <div class="mono text-dim" style="font-size:11px;margin-bottom:4px">LAUNCH WEEK PAID SIGNUPS</div>
+        <div class="mono" style="font-size:28px;font-weight:600;color:var(--orange)">10</div>
+      </div>
+      <div style="padding:16px">
+        <div class="mono text-dim" style="font-size:11px;margin-bottom:4px">LAUNCH WEEK FREE ACCOUNTS</div>
+        <div class="mono" style="font-size:28px;font-weight:600;color:var(--orange)">50+</div>
+      </div>
+    </div>
+    <div class="grid-2" style="gap:0;border-top:1px solid var(--border)">
+      <div style="padding:16px;border-right:1px solid var(--border)">
+        <div class="mono text-dim" style="font-size:11px;margin-bottom:4px">TWITTER IMPRESSIONS LAUNCH WEEK</div>
+        <div class="mono" style="font-size:28px;font-weight:600;color:var(--blue)">5,000+</div>
+      </div>
+      <div style="padding:16px">
+        <div class="mono text-dim" style="font-size:11px;margin-bottom:4px">PERSONAL OUTREACH REPLY RATE</div>
+        <div class="mono" style="font-size:28px;font-weight:600;color:var(--green)">30%+</div>
+      </div>
+    </div>
+  </div>
+  <div class="footer">Activ8 Insights · The Short Side of Wall Street™ · Internal Use Only</div>
+</div>
+
+<!-- ═══════════════════ TAB 4: CONTENT CALENDAR ═══════════════════ -->
+<div class="tab-panel" id="panel-calendar">
+  <div class="section-title">Content Calendar</div>
+  <div class="section-sub">March 13 → April 2 launch window. Every piece of content drives toward launch day.</div>
+
+  <!-- ═══ Recurring Content Strategy ═══ -->
+  <div class="card card-accent" style="margin-bottom:28px">
+    <h4 style="font-weight:700;font-size:18px;margin-bottom:16px">Recurring Content Streams</h4>
+    <p style="font-size:13px;color:var(--text-dim);margin-bottom:16px">These are the content types we should be producing on a regular cadence. Status indicates whether we have a process in place.</p>
+    <div style="display:flex;flex-direction:column;gap:10px">
+
+      <div style="display:flex;align-items:start;gap:12px;padding:12px 16px;border-radius:12px;background:rgba(74,222,128,0.05);border:1px solid rgba(74,222,128,0.12)">
+        <span style="font-size:10px;padding:3px 8px;border-radius:6px;background:rgba(74,222,128,0.15);color:var(--green);font-weight:700;white-space:nowrap;margin-top:2px">ACTIVE</span>
+        <div style="flex:1">
+          <div style="font-weight:600;font-size:14px;color:#fff">Newsletter <span style="font-weight:400;font-size:12px;color:var(--text-dim)">— Every Sunday</span></div>
+          <div style="font-size:12px;color:var(--text-dim);margin-top:2px">Weekly email to 606 subscribers. 100% in place.</div>
+        </div>
+        <span class="owner-badge badge-will" style="flex-shrink:0">Will</span>
+      </div>
+
+      <div style="display:flex;align-items:start;gap:12px;padding:12px 16px;border-radius:12px;background:rgba(74,222,128,0.05);border:1px solid rgba(74,222,128,0.12)">
+        <span style="font-size:10px;padding:3px 8px;border-radius:6px;background:rgba(74,222,128,0.15);color:var(--green);font-weight:700;white-space:nowrap;margin-top:2px">ACTIVE</span>
+        <div style="flex:1">
+          <div style="font-weight:600;font-size:14px;color:#fff">Monthly Report <span style="font-weight:400;font-size:12px;color:var(--text-dim)">— Published 3 business days after start of month</span></div>
+          <div style="font-size:12px;color:var(--text-dim);margin-top:2px">Published on website for Free Members only. Carousel on IG/LI/FB + TikTok video + Tweet about results. In place.</div>
+        </div>
+        <span class="owner-badge badge-will" style="flex-shrink:0">Will</span>
+      </div>
+
+      <div style="display:flex;align-items:start;gap:12px;padding:12px 16px;border-radius:12px;background:rgba(244,63,94,0.05);border:1px solid rgba(244,63,94,0.12)">
+        <span style="font-size:10px;padding:3px 8px;border-radius:6px;background:rgba(244,63,94,0.15);color:var(--rose);font-weight:700;white-space:nowrap;margin-top:2px">NOT STARTED</span>
+        <div style="flex:1">
+          <div style="font-weight:600;font-size:14px;color:#fff">Weekly Short Report Recap <span style="font-weight:400;font-size:12px;color:var(--text-dim)">— Every Friday 5:00 PM</span></div>
+          <div style="font-size:12px;color:var(--text-dim);margin-top:2px">Carousel summarizing week's short reports. IG + FB on Friday, LinkedIn the following Monday. <strong style="color:var(--rose)">Needs process.</strong></div>
+        </div>
+        <span style="font-size:10px;padding:3px 8px;border-radius:6px;background:rgba(100,116,139,0.15);color:var(--text-dim);font-weight:600;white-space:nowrap;flex-shrink:0;margin-top:2px">TBD</span>
+      </div>
+
+      <div style="display:flex;align-items:start;gap:12px;padding:12px 16px;border-radius:12px;background:rgba(244,63,94,0.05);border:1px solid rgba(244,63,94,0.12)">
+        <span style="font-size:10px;padding:3px 8px;border-radius:6px;background:rgba(244,63,94,0.15);color:var(--rose);font-weight:700;white-space:nowrap;margin-top:2px">NOT STARTED</span>
+        <div style="flex:1">
+          <div style="font-weight:600;font-size:14px;color:#fff">New Short Report Post <span style="font-weight:400;font-size:12px;color:var(--text-dim)">— Episodic · Driven by short seller campaigns</span></div>
+          <div style="font-size:12px;color:var(--text-dim);margin-top:2px">When a new activist short report drops: IG, LI, FB post showing the report and its impact on the stock that day. Published after market close (4 PM ET). Event-driven, not scheduled. <strong style="color:var(--rose)">Needs process.</strong></div>
+        </div>
+        <span style="font-size:10px;padding:3px 8px;border-radius:6px;background:rgba(100,116,139,0.15);color:var(--text-dim);font-weight:600;white-space:nowrap;flex-shrink:0;margin-top:2px">TBD</span>
+      </div>
+
+      <div style="display:flex;align-items:start;gap:12px;padding:12px 16px;border-radius:12px;background:rgba(244,63,94,0.05);border:1px solid rgba(244,63,94,0.12)">
+        <span style="font-size:10px;padding:3px 8px;border-radius:6px;background:rgba(244,63,94,0.15);color:var(--rose);font-weight:700;white-space:nowrap;margin-top:2px">NOT STARTED</span>
+        <div style="flex:1">
+          <div style="font-weight:600;font-size:14px;color:#fff">Article Social Posts <span style="font-weight:400;font-size:12px;color:var(--text-dim)">— Tuesday &amp; Wednesday (2/week)</span></div>
+          <div style="font-size:12px;color:var(--text-dim);margin-top:2px">IG, FB, TikTok, X post for every new website article. One posted Tuesday, one posted Wednesday. <strong style="color:var(--rose)">Needs process.</strong></div>
+        </div>
+        <span class="owner-badge badge-will" style="flex-shrink:0">Will</span>
+      </div>
+
+      <div style="display:flex;align-items:start;gap:12px;padding:12px 16px;border-radius:12px;background:rgba(244,63,94,0.05);border:1px solid rgba(244,63,94,0.12)">
+        <span style="font-size:10px;padding:3px 8px;border-radius:6px;background:rgba(244,63,94,0.15);color:var(--rose);font-weight:700;white-space:nowrap;margin-top:2px">NOT STARTED</span>
+        <div style="flex:1">
+          <div style="font-weight:600;font-size:14px;color:#fff">News Post (Episodic) <span style="font-weight:400;font-size:12px;color:var(--text-dim)">— When warranted</span></div>
+          <div style="font-size:12px;color:var(--text-dim);margin-top:2px">When a news article warrants a social push: FB, IG, LI image post. Event-driven. <strong style="color:var(--rose)">Needs process.</strong></div>
+        </div>
+        <span style="font-size:10px;padding:3px 8px;border-radius:6px;background:rgba(100,116,139,0.15);color:var(--text-dim);font-weight:600;white-space:nowrap;flex-shrink:0;margin-top:2px">TBD</span>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ═══ CloseUp Dashboard Launch Campaign ═══ -->
+  <div class="card" style="margin-bottom:28px;border:1px solid rgba(236,72,153,0.25);background:linear-gradient(135deg,rgba(236,72,153,0.04),rgba(168,85,247,0.04))">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
+      <img src="assets/Closeup_white_Icon.webp" alt="CloseUp" style="height:28px;width:28px;border-radius:6px">
+      <h4 style="font-weight:700;font-size:17px;margin:0">CloseUp: Dashboard Launch Campaign</h4>
+      <span style="font-size:10px;padding:3px 10px;border-radius:6px;background:rgba(244,63,94,0.15);color:var(--rose);font-weight:700;margin-left:auto">NEEDS PLANNING</span>
+    </div>
+    <p style="font-size:13px;color:var(--text-mid);margin-bottom:16px">CloseUp needs to start creating content specifically supporting the <strong style="color:#fff">April 2nd Dashboard launch</strong>. This is separate from their ongoing brand content calendar. The goal is to build anticipation, educate the audience about the product, and drive sign-ups.</p>
+
+    <h5 style="font-size:13px;font-weight:600;color:#fff;margin-bottom:10px">What CloseUp Needs to Deliver</h5>
+    <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:16px">
+      <div style="display:flex;gap:10px;font-size:13px;padding:10px 14px;border-radius:10px;background:rgba(2,6,23,0.4)">
+        <iconify-icon icon="lucide:video" style="color:var(--rose);font-size:16px;flex-shrink:0;margin-top:1px"></iconify-icon>
+        <div><strong style="color:#fff">Dashboard Explainer Video</strong><div style="font-size:11px;color:var(--text-dim);margin-top:2px">What the product is, who it's for, what you get. This is the #1 priority. Needs to be ready before launch day.</div></div>
+      </div>
+      <div style="display:flex;gap:10px;font-size:13px;padding:10px 14px;border-radius:10px;background:rgba(2,6,23,0.4)">
+        <iconify-icon icon="lucide:image" style="color:var(--purple);font-size:16px;flex-shrink:0;margin-top:1px"></iconify-icon>
+        <div><strong style="color:#fff">Teaser / Countdown Posts</strong><div style="font-size:11px;color:var(--text-dim);margin-top:2px">Hype posts leading up to April 2nd: "Something is coming", feature previews, pricing reveals. LI, FB, IG, TikTok.</div></div>
+      </div>
+      <div style="display:flex;gap:10px;font-size:13px;padding:10px 14px;border-radius:10px;background:rgba(2,6,23,0.4)">
+        <iconify-icon icon="lucide:monitor" style="color:var(--blue);font-size:16px;flex-shrink:0;margin-top:1px"></iconify-icon>
+        <div><strong style="color:#fff">Dashboard Feature Showcases</strong><div style="font-size:11px;color:var(--text-dim);margin-top:2px">Short posts highlighting specific features: researcher profiles, alert system, historical data, analytics. Carousel or video format.</div></div>
+      </div>
+      <div style="display:flex;gap:10px;font-size:13px;padding:10px 14px;border-radius:10px;background:rgba(2,6,23,0.4)">
+        <iconify-icon icon="lucide:megaphone" style="color:var(--orange);font-size:16px;flex-shrink:0;margin-top:1px"></iconify-icon>
+        <div><strong style="color:#fff">Launch Day Social Blitz</strong><div style="font-size:11px;color:var(--text-dim);margin-top:2px">Coordinated posts across all channels on April 2nd announcing the dashboard is live. Pricing, link, CTA.</div></div>
+      </div>
+    </div>
+
+    <h5 style="font-size:13px;font-weight:600;color:#fff;margin-bottom:8px">Target Platforms</h5>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px">
+      <div style="display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text-mid)"><iconify-icon icon="simple-icons:linkedin" style="color:#0A66C2"></iconify-icon> LinkedIn</div>
+      <div style="display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text-mid)"><iconify-icon icon="simple-icons:facebook" style="color:#1877F2"></iconify-icon> Facebook</div>
+      <div style="display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text-mid)"><iconify-icon icon="simple-icons:tiktok" style="color:#fff"></iconify-icon> TikTok</div>
+      <div style="display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text-mid)"><iconify-icon icon="simple-icons:instagram" style="color:#E4405F"></iconify-icon> Instagram</div>
+    </div>
+
+    <div style="padding:10px 14px;border-radius:10px;background:rgba(244,63,94,0.06);border:1px solid rgba(244,63,94,0.15);font-size:12px;color:var(--text-mid)">
+      <strong style="color:var(--rose)">Action required:</strong> CloseUp needs to deliver a content plan for this campaign ASAP. The launch window is tight — content should start going out by <strong style="color:#fff">March 24th</strong> at the latest to build a week of anticipation.
+    </div>
+  </div>
+
+  <!-- ═══ Calendar Grid: March 13 – April 2 ═══ -->
+  <div class="card" style="margin-bottom:28px">
+    <h4 style="font-weight:600;margin-bottom:12px">March 13 → April 2, 2026</h4>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px">
+      <span class="cal-pill pill-purple">Monthly Report</span>
+      <span class="cal-pill pill-blue">Newsletter</span>
+      <span class="cal-pill pill-teal">CloseUp Content</span>
+      <span class="cal-pill pill-orange">Launch Campaign</span>
+      <span class="cal-pill pill-rose">Short Report Recap</span>
+      <span class="cal-pill pill-green">Article Post</span>
+      <span class="cal-pill pill-amber">News Post</span>
+    </div>
+    <div class="cal-grid" id="calendarGrid">
+      <!-- JS populated -->
+    </div>
+  </div>
+
+  <hr class="section-divider">
+
+  <!-- ═══ CloseUp Scheduled Content ═══ -->
+  <div class="section-title">CloseUp Content Schedule</div>
+  <div class="section-sub">Content planned by CloseUp Marketing. Approved items are ready to publish; pending items need approval.</div>
+  <div class="card" style="margin-bottom:28px;overflow-x:auto">
+    <table class="data-table" style="font-size:13px">
+      <thead><tr><th>Content</th><th>Date</th><th>Format</th><th>Platforms</th><th>Approved</th><th>Status</th></tr></thead>
+      <tbody>
+        <tr><td style="font-weight:600">Who We Are</td><td class="mono">Feb 26</td><td>Carousel</td><td>IG, FB, TikTok</td><td style="color:var(--green)">Yes</td><td><span style="font-size:11px;padding:2px 8px;border-radius:6px;background:rgba(245,158,11,0.12);color:var(--amber)">Pending</span></td></tr>
+        <tr><td style="font-weight:600">What We Do</td><td class="mono">Feb 25</td><td>Carousel</td><td>IG, FB, TikTok</td><td style="color:var(--green)">Yes</td><td><span style="font-size:11px;padding:2px 8px;border-radius:6px;background:rgba(245,158,11,0.12);color:var(--amber)">Pending</span></td></tr>
+        <tr><td style="font-weight:600">Wall Street (Reel)</td><td class="mono">Feb 28</td><td>Reel</td><td>IG, FB, TikTok</td><td style="color:var(--green)">Yes</td><td><span style="font-size:11px;padding:2px 8px;border-radius:6px;background:rgba(245,158,11,0.12);color:var(--amber)">Pending</span></td></tr>
+        <tr><td style="font-weight:600">What is Short Selling</td><td class="mono">Mar 3</td><td>Story</td><td>IG, FB</td><td style="color:var(--green)">Yes</td><td><span style="font-size:11px;padding:2px 8px;border-radius:6px;background:rgba(59,130,246,0.12);color:var(--blue)">In Progress</span></td></tr>
+        <tr><td style="font-weight:600">We Are The Short Side</td><td class="mono">Mar 4</td><td>Story</td><td>IG, FB, TikTok</td><td style="color:var(--green)">Yes</td><td><span style="font-size:11px;padding:2px 8px;border-radius:6px;background:rgba(245,158,11,0.12);color:var(--amber)">Pending</span></td></tr>
+        <tr><td style="font-weight:600">US Short Selling ATH</td><td class="mono">Mar 6</td><td>Post</td><td>IG, FB, TikTok</td><td style="color:var(--rose)">No</td><td><span style="font-size:11px;padding:2px 8px;border-radius:6px;background:rgba(245,158,11,0.12);color:var(--amber)">Pending</span></td></tr>
+        <tr><td style="font-weight:600">Data: 1,000+ Reports</td><td class="mono">Mar 9</td><td>Story</td><td>IG, FB</td><td style="color:var(--green)">Yes</td><td><span style="font-size:11px;padding:2px 8px;border-radius:6px;background:rgba(245,158,11,0.12);color:var(--amber)">Pending</span></td></tr>
+        <tr><td style="font-weight:600">Robinhood</td><td class="mono">Mar 10</td><td>Post</td><td>IG, FB, TikTok</td><td style="color:var(--rose)">No</td><td><span style="font-size:11px;padding:2px 8px;border-radius:6px;background:rgba(245,158,11,0.12);color:var(--amber)">Pending</span></td></tr>
+        <tr><td style="font-weight:600">Serious Investors (Reel)</td><td class="mono">Mar 12</td><td>Reel</td><td>IG, FB, TikTok</td><td style="color:var(--green)">Yes</td><td><span style="font-size:11px;padding:2px 8px;border-radius:6px;background:rgba(245,158,11,0.12);color:var(--amber)">Pending</span></td></tr>
+        <tr style="background:rgba(192,255,0,0.03)"><td style="font-weight:600">What Sets Our Coverage Apart</td><td class="mono" style="color:var(--orange)">Mar 16</td><td>Carousel</td><td>IG, FB, TikTok</td><td style="color:var(--green)">Yes</td><td><span style="font-size:11px;padding:2px 8px;border-radius:6px;background:rgba(245,158,11,0.12);color:var(--amber)">Pending</span></td></tr>
+        <tr style="background:rgba(192,255,0,0.03)"><td style="font-weight:600">What to Know When… (Reel)</td><td class="mono" style="color:var(--orange)">Mar 20</td><td>Reel</td><td>IG, FB, TikTok</td><td style="color:var(--green)">Yes</td><td><span style="font-size:11px;padding:2px 8px;border-radius:6px;background:rgba(245,158,11,0.12);color:var(--amber)">Pending</span></td></tr>
+        <tr style="background:rgba(192,255,0,0.03)"><td style="font-weight:600">Crypto</td><td class="mono" style="color:var(--orange)">Mar 23</td><td>Post</td><td>IG, FB, TikTok</td><td style="color:var(--green)">Yes</td><td><span style="font-size:11px;padding:2px 8px;border-radius:6px;background:rgba(245,158,11,0.12);color:var(--amber)">Pending</span></td></tr>
+        <tr style="background:rgba(192,255,0,0.03)"><td style="font-weight:600">I Want to Short a Stock (Reel)</td><td class="mono" style="color:var(--orange)">Mar 30</td><td>Reel</td><td>IG, FB, TikTok</td><td style="color:var(--green)">Yes</td><td><span style="font-size:11px;padding:2px 8px;border-radius:6px;background:rgba(245,158,11,0.12);color:var(--amber)">Pending</span></td></tr>
+        <tr><td style="font-weight:600">Understand Short Selling (Reel)</td><td class="mono">Apr 7</td><td>Reel</td><td>IG, FB, TikTok</td><td style="color:var(--green)">Yes</td><td><span style="font-size:11px;padding:2px 8px;border-radius:6px;background:rgba(245,158,11,0.12);color:var(--amber)">Pending</span></td></tr>
+      </tbody>
+    </table>
+    <div style="margin-top:12px;font-size:11px;color:var(--text-dim)">Highlighted rows are within the Mar 13–Apr 2 launch window. Source: CloseUp Notion calendar.</div>
+  </div>
+
+  <hr class="section-divider">
+
+  <!-- ═══ Launch Week ═══ -->
+  <div class="section-title">Launch Week Content Plan (April 2–8)</div>
+  <div class="section-sub">Day-by-day content blitz</div>
+  <div class="card" style="overflow-x:auto">
+    <table class="data-table">
+      <thead><tr><th>Day</th><th>Date</th><th>Content</th><th>Platforms</th><th>Owner</th></tr></thead>
+      <tbody>
+        <tr><td class="mono" style="font-weight:600;color:var(--orange)">Day 0</td><td class="mono">Apr 2</td><td>HARD LAUNCH: Email Seq. #1, social blast, pricing page live</td><td>Email, X, IG, TikTok, LI</td><td><span class="owner-badge badge-will">Will</span></td></tr>
+        <tr><td class="mono" style="font-weight:600">Day 1</td><td class="mono">Apr 3</td><td>Email Seq. #2: Dashboard walkthrough video, feature highlights</td><td>Email, X, IG, TikTok</td><td><span class="owner-badge badge-gabe">Gabe</span></td></tr>
+        <tr><td class="mono" style="font-weight:600">Day 2</td><td class="mono">Apr 4</td><td>Email Seq. #3: Tips &amp; Tricks + Short Report Recap (Friday)</td><td>Email, X, IG, FB</td><td><span class="owner-badge badge-will">Will</span></td></tr>
+        <tr><td class="mono" style="font-weight:600">Day 3</td><td class="mono">Apr 5</td><td>Newsletter + User testimonials, data viz highlights</td><td>Email, X, IG, LI</td><td><span class="owner-badge badge-will">Will</span></td></tr>
+        <tr><td class="mono" style="font-weight:600">Day 4</td><td class="mono">Apr 6</td><td>Recap LI post (Monday) + BP Comparison, PR follow-ups</td><td>LI, X, IG</td><td><span class="owner-badge badge-will">Will</span></td></tr>
+        <tr><td class="mono" style="font-weight:600">Day 5</td><td class="mono">Apr 7</td><td>CloseUp: Understand Short Selling reel + Behind-the-scenes</td><td>IG, FB, TikTok, X</td><td><span class="owner-badge badge-kai">Kai</span></td></tr>
+        <tr><td class="mono" style="font-weight:600">Day 6</td><td class="mono">Apr 8</td><td>Week 1 recap, early results, social proof roundup</td><td>Email, X, IG</td><td><span class="owner-badge badge-will">Will</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="footer">Activ8 Insights · The Short Side of Wall Street™ · Internal Use Only</div>
+</div>
+
+<!-- ═══════════════════ TAB 5: CHANNEL STRATEGY ═══════════════════ -->
+<div class="tab-panel" id="panel-channels">
+  <div class="section-title">Channel Strategy</div>
+  <div class="section-sub">Role, ownership, and targets for every channel</div>
+
+  <!-- Acquisition Funnel -->
+  <div class="card" style="margin-bottom:28px;padding:32px">
+    <h4 style="font-weight:700;font-size:18px;margin-bottom:4px;text-align:center">Acquisition Funnel</h4>
+    <p style="font-size:13px;color:var(--text-dim);text-align:center;margin-bottom:24px">How we turn social audiences into paying subscribers</p>
+
+    <div class="funnel-layout">
+
+      <!-- Main Funnel (3 stages) -->
+      <div class="funnel-main">
+        <div class="funnel-wrap">
+          <!-- Stage 1: Discovery -->
+          <div class="funnel-stage funnel-stage-1">
+            <div class="funnel-icons">
+              <div class="funnel-icon-circle"><iconify-icon icon="simple-icons:instagram" style="color:#E4405F"></iconify-icon></div>
+              <div class="funnel-icon-circle"><iconify-icon icon="simple-icons:facebook" style="color:#1877F2"></iconify-icon></div>
+              <div class="funnel-icon-circle"><iconify-icon icon="simple-icons:x" style="color:#fff"></iconify-icon></div>
+              <div class="funnel-icon-circle"><iconify-icon icon="simple-icons:linkedin" style="color:#0A66C2"></iconify-icon></div>
+              <div class="funnel-icon-circle"><iconify-icon icon="lucide:message-circle" style="color:var(--amber)"></iconify-icon></div>
+            </div>
+            <div class="funnel-label">
+              <div class="funnel-label-title" style="color:var(--orange)">Discovery</div>
+              <div class="funnel-label-desc">Social, search, word of mouth → Website</div>
+            </div>
+            <div class="funnel-metric" style="color:var(--orange)">741</div>
+          </div>
+
+          <div class="funnel-arrow"><iconify-icon icon="lucide:chevron-down"></iconify-icon><iconify-icon icon="lucide:chevron-down"></iconify-icon><iconify-icon icon="lucide:chevron-down"></iconify-icon></div>
+
+          <!-- Stage 2: Free Member -->
+          <div class="funnel-stage funnel-stage-2">
+            <div class="funnel-icons">
+              <div class="funnel-icon-circle" style="background:rgba(168,85,247,0.12);border-color:rgba(168,85,247,0.25)"><iconify-icon icon="lucide:user-plus" style="color:var(--purple)"></iconify-icon></div>
+            </div>
+            <div class="funnel-label">
+              <div class="funnel-label-title" style="color:var(--purple)">Free Member</div>
+              <div class="funnel-label-desc">Memberstack account → Monthly Reports access</div>
+            </div>
+            <div style="text-align:right;margin-left:auto;flex-shrink:0">
+              <div class="funnel-metric" style="color:var(--purple);margin:0">11</div>
+              <div style="font-size:10px;color:var(--text-dim)">since 3/8</div>
+            </div>
+          </div>
+
+          <div class="funnel-arrow"><iconify-icon icon="lucide:chevron-down"></iconify-icon><iconify-icon icon="lucide:chevron-down"></iconify-icon><iconify-icon icon="lucide:chevron-down"></iconify-icon></div>
+
+          <!-- Stage 3: Paid Subscriber -->
+          <div class="funnel-stage funnel-stage-3">
+            <div class="funnel-icons">
+              <div class="funnel-icon-circle" style="background:rgba(74,222,128,0.12);border-color:rgba(74,222,128,0.25)"><iconify-icon icon="lucide:crown" style="color:var(--green)"></iconify-icon></div>
+            </div>
+            <div class="funnel-label">
+              <div class="funnel-label-title" style="color:var(--green)">Paid Subscriber</div>
+              <div class="funnel-label-desc">Dashboard access ($99/mo+)</div>
+            </div>
+            <div class="funnel-metric" style="color:var(--green)">Apr 2</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Newsletter Pool (side element) -->
+      <div class="funnel-side">
+        <div class="funnel-side-arrow"><iconify-icon icon="lucide:arrow-right" style="font-size:20px"></iconify-icon></div>
+        <iconify-icon icon="lucide:mail" style="font-size:28px;color:var(--blue);margin-bottom:8px"></iconify-icon>
+        <div style="font-family:'Satoshi',sans-serif;font-weight:700;font-size:32px;color:var(--blue)">606</div>
+        <div style="font-weight:600;font-size:14px;color:#fff;margin-bottom:4px">Newsletter Subscribers</div>
+        <div style="font-size:11px;color:var(--text-dim);margin-bottom:14px">Legacy email list (pre-free tier)</div>
+        <div style="width:100%;height:1px;background:rgba(59,130,246,0.2);margin-bottom:14px"></div>
+        <div style="font-size:12px;color:var(--text-mid);text-align:left">
+          <div style="display:flex;align-items:center;gap:6px;margin-bottom:6px"><iconify-icon icon="lucide:target" style="color:var(--blue);font-size:13px"></iconify-icon> <strong>Goal:</strong> Convert to Free Members</div>
+          <div style="display:flex;align-items:center;gap:6px"><iconify-icon icon="lucide:arrow-up-right" style="color:var(--green);font-size:13px"></iconify-icon> <strong>Then:</strong> Upgrade to Paid</div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Memberstack note -->
+    <div style="margin-top:20px;padding:12px 16px;border-radius:12px;background:rgba(168,85,247,0.06);border:1px solid rgba(168,85,247,0.15);display:flex;align-items:center;gap:10px">
+      <iconify-icon icon="lucide:layers" style="color:var(--purple);font-size:16px;flex-shrink:0"></iconify-icon>
+      <span style="font-size:12px;color:var(--text-mid)"><strong style="color:var(--purple)">Memberstack</strong> manages all membership tiers. Free tier launched <strong style="color:#fff">March 8, 2026</strong>. The 606 newsletter subscribers are a legacy pool to convert into Free Members, then Paid Subscribers.</span>
+    </div>
+  </div>
+
+  <div class="grid-2" style="margin-bottom:28px">
+    <!-- Twitter -->
+    <div class="card channel-card card-accent">
+      <div class="ch-header">
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <div><div class="ch-name">X / Twitter</div><div class="ch-owner">Owner: Will + Gabe</div></div>
+          <span class="status status-highest">Highest</span>
+        </div>
+      </div>
+      <div class="ch-body">
+        <div class="ch-stat-row"><span class="ch-stat-label">Audience</span><span class="ch-stat-val" style="font-size:12px">FinTwit: traders, short sellers, retail investors</span></div>
+        <div class="ch-stat-row"><span class="ch-stat-label">Strategy</span><span class="ch-stat-val" style="font-size:12px">Breaking reports, data takes, trader POV, recaps</span></div>
+        <div class="ch-stat-row"><span class="ch-stat-label">Current</span><span class="ch-stat-val">211 followers</span></div>
+        <div class="ch-stat-row"><span class="ch-stat-label">Q2 Target</span><span class="ch-stat-val text-orange">1,000 followers</span></div>
+        <div class="ch-stat-row"><span class="ch-stat-label">Tools</span><span class="ch-stat-val text-dim" style="font-size:12px">Metricool, Activ8 Twitter Studio</span></div>
+      </div>
+    </div>
+    <!-- Instagram -->
+    <div class="card channel-card card-accent-pink">
+      <div class="ch-header">
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <div><div class="ch-name">Instagram</div><div class="ch-owner">Owner: CloseUp Marketing</div></div>
+          <span class="status status-high">High</span>
+        </div>
+      </div>
+      <div class="ch-body">
+        <div class="ch-stat-row"><span class="ch-stat-label">Audience</span><span class="ch-stat-val" style="font-size:12px">Broader finance/investing community</span></div>
+        <div class="ch-stat-row"><span class="ch-stat-label">Strategy</span><span class="ch-stat-val" style="font-size:12px">Visual cards, carousels, reels, branded content</span></div>
+        <div class="ch-stat-row"><span class="ch-stat-label">Current</span><span class="ch-stat-val">17 followers</span></div>
+        <div class="ch-stat-row"><span class="ch-stat-label">Q2 Target</span><span class="ch-stat-val" style="color:#EC4899">500 followers</span></div>
+        <div class="ch-stat-row"><span class="ch-stat-label">Tools</span><span class="ch-stat-val text-dim" style="font-size:12px">Meta Business Suite, CloseUp</span></div>
+      </div>
+    </div>
+    <!-- Newsletter -->
+    <div class="card channel-card card-accent-blue">
+      <div class="ch-header">
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <div><div class="ch-name">Newsletter / Email</div><div class="ch-owner">Owner: Will</div></div>
+          <span class="status status-high">High</span>
+        </div>
+      </div>
+      <div class="ch-body">
+        <div class="ch-stat-row"><span class="ch-stat-label">Platform</span><span class="ch-stat-val">Buttondown</span></div>
+        <div class="ch-stat-row"><span class="ch-stat-label">Audience</span><span class="ch-stat-val" style="font-size:12px">Existing subs: most likely to convert to paid</span></div>
+        <div class="ch-stat-row"><span class="ch-stat-label">Strategy</span><span class="ch-stat-val" style="font-size:12px">Weekly recap, product updates, launch announces</span></div>
+        <div class="ch-stat-row"><span class="ch-stat-label">Current</span><span class="ch-stat-val">606 subs, 12% open</span></div>
+        <div class="ch-stat-row"><span class="ch-stat-label">Q2 Target</span><span class="ch-stat-val text-blue">1,000 subs, 20% open</span></div>
+      </div>
+    </div>
+    <!-- TikTok -->
+    <div class="card channel-card card-accent-teal">
+      <div class="ch-header">
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <div><div class="ch-name">TikTok</div><div class="ch-owner">Owner: CloseUp Marketing</div></div>
+          <span class="status status-medium">Medium</span>
+        </div>
+      </div>
+      <div class="ch-body">
+        <div class="ch-stat-row"><span class="ch-stat-label">Audience</span><span class="ch-stat-val" style="font-size:12px">Younger retail investors, finance TikTok</span></div>
+        <div class="ch-stat-row"><span class="ch-stat-label">Strategy</span><span class="ch-stat-val" style="font-size:12px">Short explainers, breaking news visuals</span></div>
+        <div class="ch-stat-row"><span class="ch-stat-label">Current</span><span class="ch-stat-val">0 followers (verified)</span></div>
+        <div class="ch-stat-row"><span class="ch-stat-label">Q2 Target</span><span class="ch-stat-val text-teal">200 followers</span></div>
+      </div>
+    </div>
+    <!-- LinkedIn -->
+    <div class="card channel-card card-accent-cyan">
+      <div class="ch-header">
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <div><div class="ch-name">LinkedIn</div><div class="ch-owner">Owner: Will</div></div>
+          <span class="status status-medium">Medium</span>
+        </div>
+      </div>
+      <div class="ch-body">
+        <div class="ch-stat-row"><span class="ch-stat-label">Audience</span><span class="ch-stat-val" style="font-size:12px">Finance pros, institutional partners</span></div>
+        <div class="ch-stat-row"><span class="ch-stat-label">Strategy</span><span class="ch-stat-val" style="font-size:12px">Thought leadership, monthly reports, announcements</span></div>
+        <div class="ch-stat-row"><span class="ch-stat-label">Current</span><span class="ch-stat-val">19 followers</span></div>
+        <div class="ch-stat-row"><span class="ch-stat-label">Q2 Target</span><span class="ch-stat-val text-cyan">200 followers</span></div>
+      </div>
+    </div>
+    <!-- Facebook -->
+    <div class="card channel-card card-accent-purple">
+      <div class="ch-header">
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <div><div class="ch-name">Facebook</div><div class="ch-owner">Owner: CloseUp (Meta Ads)</div></div>
+          <span class="status status-low">Low</span>
+        </div>
+      </div>
+      <div class="ch-body">
+        <div class="ch-stat-row"><span class="ch-stat-label">Strategy</span><span class="ch-stat-val" style="font-size:12px">Paid traffic + content distribution (ads-first)</span></div>
+        <div class="ch-stat-row"><span class="ch-stat-label">Current</span><span class="ch-stat-val">1 follower</span></div>
+        <div class="ch-stat-row"><span class="ch-stat-label">Focus</span><span class="ch-stat-val text-dim" style="font-size:12px">Not organic growth: ads only</span></div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="section-divider">
+
+  <!-- 5.2 Paid Media -->
+  <div class="section-title">Paid Media Status</div>
+  <div class="section-sub">Meta Ads setup and readiness</div>
+  <div class="card card-accent-purple">
+    <div class="ch-stat-row"><span class="ch-stat-label">Meta Ads Account</span><span class="ch-stat-val"><span class="status status-connected">Connected ✓</span></span></div>
+    <div class="ch-stat-row"><span class="ch-stat-label">Meta Pixel</span><span class="ch-stat-val"><span class="status status-connected">Installed ✓</span></span></div>
+    <div class="ch-stat-row"><span class="ch-stat-label">Custom Audiences</span><span class="ch-stat-val"><span class="status status-connected">Built ✓</span></span></div>
+    <div class="ch-stat-row" style="border-bottom:none"><span class="ch-stat-label">Campaigns Launched</span><span class="ch-stat-val"><span class="status status-not-yet">Not Yet</span></span></div>
+    <p style="font-size:12px;color:var(--text-dim);margin-top:12px;font-family:'IBM Plex Mono',monospace">Audiences built: website visitors 30d, top 5%, IG followers, FB followers, engagement audiences. Campaigns launching March/April.</p>
+  </div>
+  <div class="footer">Activ8 Insights · The Short Side of Wall Street™ · Internal Use Only</div>
+</div>
+
+<!-- ═══════════════════ TAB 6: BUDGET & SPEND ═══════════════════ -->
+<div class="tab-panel" id="panel-budget">
+  <div class="section-title">Budget &amp; Spend</div>
+  <div class="section-sub">Agency spend, paid media budget, and revenue projections</div>
+
+  <!-- Agency Spend -->
+  <div class="card card-accent-purple" style="margin-bottom:28px;overflow-x:auto">
+    <h4 style="font-weight:600;margin-bottom:16px">Agency Spend — CloseUp Marketing</h4>
+    <p style="font-size:13px;color:var(--text-dim);margin-bottom:16px">Contract signed 02/10/2026 · Led by Daniel Von Zedlitz · Month-to-month, 30-day notice to cancel</p>
+    <table class="data-table">
+      <thead><tr><th>Phase</th><th>Period</th><th>Monthly Cost</th></tr></thead>
+      <tbody>
+        <tr><td>Initial Engagement</td><td class="text-dim">Months 1–3</td><td class="num mono" style="color:var(--orange)">$1,500/mo</td></tr>
+        <tr><td>Growth &amp; Scaling</td><td class="text-dim">Months 4–6</td><td class="num mono">$2,000/mo</td></tr>
+        <tr><td>Advanced Optimization</td><td class="text-dim">Months 7–9</td><td class="num mono">$2,500/mo</td></tr>
+      </tbody>
+    </table>
+    <div style="margin-top:16px">
+      <h5 style="font-size:13px;color:var(--text-mid);margin-bottom:10px">Services Included</h5>
+      <div style="display:flex;flex-wrap:wrap;gap:8px">
+        <span style="font-size:11px;padding:4px 10px;border-radius:8px;background:rgba(168,85,247,0.12);color:var(--purple)">Market &amp; Brand Positioning</span>
+        <span style="font-size:11px;padding:4px 10px;border-radius:8px;background:rgba(168,85,247,0.12);color:var(--purple)">Social Profile Optimization</span>
+        <span style="font-size:11px;padding:4px 10px;border-radius:8px;background:rgba(168,85,247,0.12);color:var(--purple)">Weekly Meta Ads Management</span>
+        <span style="font-size:11px;padding:4px 10px;border-radius:8px;background:rgba(168,85,247,0.12);color:var(--purple)">Monthly Performance Report</span>
+        <span style="font-size:11px;padding:4px 10px;border-radius:8px;background:rgba(168,85,247,0.12);color:var(--purple)">Content: 3 Reels, 4 Ad Creatives, 2 Carousels, 1 Story</span>
+        <span style="font-size:11px;padding:4px 10px;border-radius:8px;background:rgba(168,85,247,0.12);color:var(--purple)">Social Media Automations</span>
+      </div>
+      <div class="mono text-dim" style="font-size:11px;margin-top:10px">* Video editing: $35/video · Custom package, adjustable based on needs</div>
+    </div>
+  </div>
+
+  <!-- 6.3 Paid Media Budget -->
+  <div class="card card-accent-blue" style="margin-bottom:28px;overflow-x:auto">
+    <h4 style="font-weight:600;margin-bottom:16px">Paid Media Budget</h4>
+    <p style="font-size:13px;color:var(--text-dim);margin-bottom:16px">Meta Ads (Facebook + Instagram): launching April. Target: engagement + traffic campaigns initially.</p>
+    <table class="data-table">
+      <thead><tr><th>Campaign</th><th>Platform</th><th>Budget</th><th>Spent</th><th>Results</th></tr></thead>
+      <tbody>
+        <tr><td class="text-dim">Launch: Engagement</td><td class="text-dim">Meta (IG + FB)</td><td class="num mono text-dim">TBD</td><td class="num mono">$0</td><td class="text-dim">Not started</td></tr>
+        <tr><td class="text-dim">Launch: Traffic</td><td class="text-dim">Meta (IG + FB)</td><td class="num mono text-dim">TBD</td><td class="num mono">$0</td><td class="text-dim">Not started</td></tr>
+        <tr><td class="text-dim">Retargeting: Website</td><td class="text-dim">Meta</td><td class="num mono text-dim">TBD</td><td class="num mono">$0</td><td class="text-dim">Not started</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 6.4 Revenue vs Spend -->
+  <div class="card card-accent-green" style="overflow-x:auto">
+    <h4 style="font-weight:600;margin-bottom:16px">Revenue Targets vs. Spend</h4>
+    <div class="grid-4" style="margin-bottom:20px">
+      <div style="text-align:center">
+        <div class="mono text-dim" style="font-size:11px;margin-bottom:4px">MONTHLY COST</div>
+        <div class="mono" style="font-size:24px;font-weight:600;color:var(--red)">$1,500</div>
+        <div class="mono text-dim" style="font-size:10px">CloseUp (Months 1–3)</div>
+      </div>
+      <div style="text-align:center">
+        <div class="mono text-dim" style="font-size:11px;margin-bottom:4px">BREAK EVEN</div>
+        <div class="mono" style="font-size:24px;font-weight:600;color:var(--amber)">~16 subs</div>
+        <div class="mono text-dim" style="font-size:10px">At $99/mo</div>
+      </div>
+      <div style="text-align:center">
+        <div class="mono text-dim" style="font-size:11px;margin-bottom:4px">CURRENT ARR</div>
+        <div class="mono" style="font-size:24px;font-weight:600;color:var(--text-dim)">$0</div>
+        <div class="mono text-dim" style="font-size:10px">Pre-launch</div>
+      </div>
+      <div style="text-align:center">
+        <div class="mono text-dim" style="font-size:11px;margin-bottom:4px">APRIL TARGET</div>
+        <div class="mono" style="font-size:24px;font-weight:600;color:var(--green)">10 subs</div>
+        <div class="mono text-dim" style="font-size:10px">~$990 MRR</div>
+      </div>
+    </div>
+    <table class="data-table">
+      <thead><tr><th>Tier</th><th>Price</th><th>Refund Policy</th></tr></thead>
+      <tbody>
+        <tr><td>Monthly</td><td class="num mono">$99/mo</td><td class="text-dim">Cancel any time</td></tr>
+        <tr><td>Quarterly</td><td class="num mono">$235</td><td class="text-dim">No refund</td></tr>
+        <tr><td>Founders (2-year)</td><td class="num mono" style="color:var(--orange)">$1,199</td><td class="text-dim">No refund, ever</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="footer">Activ8 Insights · The Short Side of Wall Street™ · Internal Use Only</div>
+</div>
+
+<!-- ═══════════════════ TAB 7: DASHBOARD PRODUCT ═══════════════════ -->
+<div class="tab-panel" id="panel-product">
+  <div class="section-title">Dashboard Product</div>
+  <div class="section-sub">What we are selling: the Activ8 Insights activist short selling data platform.</div>
+
+  <!-- Product Overview -->
+  <div class="card card-accent" style="margin-bottom:28px">
+    <h4 style="font-weight:600;margin-bottom:16px">Product Overview</h4>
+    <p style="font-size:14px;color:var(--text-mid);margin-bottom:16px">Activ8 Insights is a subscription data platform that tracks, analyzes, and reports on activist short selling campaigns across global markets. It combines original journalism, institutional-grade data tools, and customized analytics to help retail investors evaluate short theses and make informed trading decisions.</p>
+    <div class="grid-3" style="margin-top:16px">
+      <div style="text-align:center;padding:16px;border-radius:16px;background:rgba(192,255,0,0.05);border:1px solid rgba(192,255,0,0.1)">
+        <div style="font-size:28px;font-weight:700;color:var(--orange)">1,500+</div>
+        <div class="mono text-dim" style="font-size:11px;margin-top:4px">Short Reports Tracked</div>
+      </div>
+      <div style="text-align:center;padding:16px;border-radius:16px;background:rgba(59,130,246,0.05);border:1px solid rgba(59,130,246,0.1)">
+        <div style="font-size:28px;font-weight:700;color:var(--blue)">849+</div>
+        <div class="mono text-dim" style="font-size:11px;margin-top:4px">Stocks Covered</div>
+      </div>
+      <div style="text-align:center;padding:16px;border-radius:16px;background:rgba(45,212,191,0.05);border:1px solid rgba(45,212,191,0.1)">
+        <div style="font-size:28px;font-weight:700;color:var(--teal)">Since 2008</div>
+        <div class="mono text-dim" style="font-size:11px;margin-top:4px">Historical Database</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Platform Capabilities -->
+  <div class="card" style="margin-bottom:28px">
+    <h4 style="font-weight:600;margin-bottom:16px">Platform Capabilities</h4>
+    <p style="font-size:14px;color:var(--text-mid);margin-bottom:16px">Our subscription data platform features:</p>
+    <ul style="font-size:14px;color:var(--text-mid);display:flex;flex-direction:column;gap:8px;padding-left:18px">
+      <li><strong>Comprehensive Database:</strong> Searchable archive of activist short seller research reports</li>
+      <li><strong>Proprietary Analytics:</strong> Five-category evaluation framework covering Business Model Risk, Balance Sheet, Governance, Regulatory, and Hype factors</li>
+      <li><strong>Campaign Tracking:</strong> Real-time monitoring of active short positions and their performance</li>
+      <li><strong>Interactive Dashboard:</strong> Visual analytics and data visualization tools</li>
+      <li><strong>Historical Performance:</strong> Track record analysis of short sellers and their campaigns</li>
+      <li><strong>News Integration:</strong> Our original journalism integrated with data and analytics</li>
+    </ul>
+  </div>
+
+  <!-- Core Features -->
+  <div class="card" style="margin-bottom:28px">
+    <h4 style="font-weight:600;margin-bottom:16px">Core Features</h4>
+    <div style="display:flex;flex-direction:column;gap:12px">
+      <div style="display:flex;gap:12px;align-items:start"><iconify-icon icon="lucide:database" style="color:var(--blue);font-size:18px;margin-top:2px;flex-shrink:0"></iconify-icon><div><div style="font-weight:600;font-size:14px">Deep Historical Database</div><div style="font-size:13px;color:var(--text-dim)">1,500+ reports dating back to 2008 with researcher profiles, track records, and success rates</div></div></div>
+      <div style="display:flex;gap:12px;align-items:start"><iconify-icon icon="lucide:line-chart" style="color:var(--teal);font-size:18px;margin-top:2px;flex-shrink:0"></iconify-icon><div><div style="font-weight:600;font-size:14px">Customized Analytics</div><div style="font-size:13px;color:var(--text-dim)">Researcher scorecards, thesis validation rates, sector patterns, timing analysis, and personalized alerts</div></div></div>
+      <div style="display:flex;gap:12px;align-items:start"><iconify-icon icon="lucide:bell" style="color:var(--amber);font-size:18px;margin-top:2px;flex-shrink:0"></iconify-icon><div><div style="font-weight:600;font-size:14px">Real-Time Alerts</div><div style="font-size:13px;color:var(--text-dim)">Get notified when new short reports drop, when your holdings are targeted, or when squeeze conditions form</div></div></div>
+      <div style="display:flex;gap:12px;align-items:start"><iconify-icon icon="lucide:users" style="color:var(--purple);font-size:18px;margin-top:2px;flex-shrink:0"></iconify-icon><div><div style="font-weight:600;font-size:14px">Researcher Profiles</div><div style="font-size:13px;color:var(--text-dim)">Deep profiles on activist short sellers with win rates, sector expertise, behavioral patterns, and campaign history</div></div></div>
+    </div>
+  </div>
+
+  <!-- Who Is This For -->
+  <div class="card" style="margin-bottom:28px">
+    <h4 style="font-weight:600;margin-bottom:16px">Who Is This For?</h4>
+    <p style="font-size:13px;color:var(--text-dim);margin-bottom:16px">Not just short sellers. Every retail trader with a portfolio is a potential customer.</p>
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <div style="display:flex;gap:10px;font-size:14px"><span style="color:var(--orange);font-weight:600">→</span><span><strong>Active short sellers:</strong> Research-backed data and analytics to support an active short strategy</span></div>
+      <div style="display:flex;gap:10px;font-size:14px"><span style="color:var(--green);font-weight:600">→</span><span><strong>Buy-the-dip traders:</strong> Identify overblown short attacks that create buying opportunities</span></div>
+      <div style="display:flex;gap:10px;font-size:14px"><span style="color:var(--blue);font-weight:600">→</span><span><strong>Due diligence:</strong> Short reports often surface legitimate concerns: use them as free research</span></div>
+      <div style="display:flex;gap:10px;font-size:14px"><span style="color:var(--purple);font-weight:600">→</span><span><strong>Squeeze hunters:</strong> Track heavily-shorted names for potential short squeeze opportunities</span></div>
+      <div style="display:flex;gap:10px;font-size:14px"><span style="color:var(--teal);font-weight:600">→</span><span><strong>Market sentiment:</strong> Understand what the smart money sees that bulls might be missing</span></div>
+    </div>
+  </div>
+
+  <!-- Pricing Tiers -->
+  <div class="card card-accent-green" style="margin-bottom:28px;overflow-x:auto">
+    <h4 style="font-weight:600;margin-bottom:16px">Pricing Tiers</h4>
+    <div class="grid-3" style="margin-bottom:20px">
+      <div style="padding:20px;border-radius:16px;background:rgba(2,6,23,0.5);border:1px solid var(--border-bright);text-align:center">
+        <div class="mono text-dim" style="font-size:10px;margin-bottom:8px;text-transform:uppercase;letter-spacing:1px">Monthly</div>
+        <div style="font-size:32px;font-weight:700;color:#fff;margin-bottom:4px">$99<span style="font-size:14px;color:var(--text-dim)">/mo</span></div>
+        <div class="mono text-dim" style="font-size:11px;margin-bottom:12px">Cancel any time</div>
+        <div style="font-size:12px;color:var(--text-mid)">Full platform access, all reports, alerts, analytics</div>
+      </div>
+      <div style="padding:20px;border-radius:16px;background:rgba(59,130,246,0.05);border:1px solid rgba(59,130,246,0.2);text-align:center">
+        <div class="mono" style="font-size:10px;margin-bottom:8px;text-transform:uppercase;letter-spacing:1px;color:var(--blue)">Quarterly</div>
+        <div style="font-size:32px;font-weight:700;color:#fff;margin-bottom:4px">$235<span style="font-size:14px;color:var(--text-dim)">/qtr</span></div>
+        <div class="mono text-dim" style="font-size:11px;margin-bottom:12px">~$78/mo · Save 21%</div>
+        <div style="font-size:12px;color:var(--text-mid)">Everything in Monthly + priority support</div>
+      </div>
+      <div style="padding:20px;border-radius:16px;background:rgba(192,255,0,0.05);border:2px solid rgba(192,255,0,0.3);text-align:center;position:relative">
+        <div style="position:absolute;top:-10px;left:50%;transform:translateX(-50%);background:var(--orange);color:#000;font-size:10px;font-weight:700;padding:2px 10px;border-radius:6px;text-transform:uppercase;letter-spacing:0.5px">Best Value</div>
+        <div class="mono" style="font-size:10px;margin-bottom:8px;text-transform:uppercase;letter-spacing:1px;color:var(--orange)">Founders · 2 Year</div>
+        <div style="font-size:32px;font-weight:700;color:var(--orange);margin-bottom:4px">$1,199</div>
+        <div class="mono text-dim" style="font-size:11px;margin-bottom:12px">~$50/mo · Save 50%</div>
+        <div style="font-size:12px;color:var(--text-mid)">Lifetime founding member status + pre-release data access</div>
+      </div>
+    </div>
+    <div class="mono text-dim" style="font-size:11px;text-align:center">No refunds on Quarterly or Founders tiers · Founders tier limited availability</div>
+  </div>
+
+  <!-- Key Messaging -->
+  <div class="card" style="margin-bottom:28px">
+    <h4 style="font-weight:600;margin-bottom:16px">Key Messaging for Marketing</h4>
+    <div style="display:flex;flex-direction:column;gap:10px;font-size:14px">
+      <div style="display:flex;gap:10px"><span style="color:var(--orange);font-weight:700">1.</span><span><strong>For ALL retail traders:</strong> 165M US stock traders, not just short sellers</span></div>
+      <div style="display:flex;gap:10px"><span style="color:var(--orange);font-weight:700">2.</span><span><strong>Historical depth:</strong> Database back to 2008 with 1,500+ reports</span></div>
+      <div style="display:flex;gap:10px"><span style="color:var(--orange);font-weight:700">3.</span><span><strong>Portfolio defense:</strong> Know when your holdings are targeted before the drop</span></div>
+      <div style="display:flex;gap:10px"><span style="color:var(--orange);font-weight:700">4.</span><span><strong>Bloomberg of activist shorts:</strong> Intelligence layer on commoditized data</span></div>
+    </div>
+  </div>
+
+  <!-- Founders Tier Note -->
+  <div class="card" style="margin-bottom:28px;border:1px dashed rgba(192,255,0,0.3)">
+    <h4 style="font-weight:600;margin-bottom:12px">Founders Tier — Open Question</h4>
+    <p style="font-size:14px;color:var(--text-mid);margin-bottom:12px">We don't currently have defined key items for the Founders package beyond extended data access. The goal is to offer something beyond the traditional data product that justifies the premium and creates exclusivity.</p>
+    <p style="font-size:13px;color:var(--text-dim)"><strong style="color:var(--orange)">Open to ideas:</strong> What unique value can we bundle into the Founders tier? Examples could include direct researcher Q&amp;As, priority feature requests, exclusive community access, early access to new tools, custom alerts, or 1-on-1 strategy calls. This needs to be defined before launch.</p>
+  </div>
+
+  <div class="footer">Activ8 Insights · The Short Side of Wall Street™ · Internal Use Only</div>
+</div>
+
+<!-- ═══════════════════ TAB 8: WHO WE ARE ═══════════════════ -->
+<div class="tab-panel" id="panel-whoweare">
+
+  <div class="section-title">Activ8 Insights — Who We Are</div>
+  <div class="section-sub">Internal reference. Company identity, operations, market context, and strategic priorities.</div>
+
+  <div class="wwa-layout">
+    <!-- Vertical Sidebar Nav -->
+    <div class="wwa-sidebar">
+      <div class="wwa-sidebar-label">Sections</div>
+      <button class="wwa-nav-btn active" data-wwa="wwa-whatwedo"><span class="wwa-icon">⚡</span> What We Do</button>
+      <button class="wwa-nav-btn" data-wwa="wwa-operations"><span class="wwa-icon">📰</span> Current Operations</button>
+      <button class="wwa-nav-btn" data-wwa="wwa-platform"><span class="wwa-icon">🚀</span> Platform Launch</button>
+      <button class="wwa-nav-btn" data-wwa="wwa-audience"><span class="wwa-icon">🎯</span> Target Audience</button>
+      <button class="wwa-nav-btn" data-wwa="wwa-shortselling"><span class="wwa-icon">📉</span> Short Selling 101</button>
+      <button class="wwa-nav-btn" data-wwa="wwa-activist"><span class="wwa-icon">🔍</span> Activist Short Selling</button>
+      <button class="wwa-nav-btn" data-wwa="wwa-whyitmatters"><span class="wwa-icon">💡</span> Why This Matters</button>
+      <button class="wwa-nav-btn" data-wwa="wwa-marketing"><span class="wwa-icon">📣</span> Why Marketing Now</button>
+      <button class="wwa-nav-btn" data-wwa="wwa-competitors"><span class="wwa-icon">⚔️</span> Competitors</button>
+      <button class="wwa-nav-btn" data-wwa="wwa-brand"><span class="wwa-icon">🎨</span> Brand Guidelines</button>
+      <button class="wwa-nav-btn" data-wwa="wwa-gallery"><span class="wwa-icon">🖼️</span> Content Gallery</button>
+    </div>
+
+    <!-- Content Area -->
+    <div class="wwa-content">
+
+      <!-- Section: What We Do -->
+      <div class="wwa-section active" id="wwa-whatwedo">
+        <h2>What We Do</h2>
+        <div class="wwa-tagline">Tracking, analyzing, and reporting on activist short selling campaigns</div>
+        <p>Activ8 Insights tracks, analyzes, and reports on activist short selling campaigns across global markets. We write original news articles covering activist short seller research reports, campaign developments, stock performance, company responses, and market reactions.</p>
+        <p>We provide analytical frameworks to help retail investors evaluate short theses and make informed trading decisions.</p>
+      </div>
+
+      <!-- Section: Current Operations -->
+      <div class="wwa-section" id="wwa-operations">
+        <h2>Current Operations</h2>
+        <div class="wwa-tagline">News phase — building the foundation</div>
+        <ul>
+          <li><strong>Original Journalism:</strong> Writing news articles covering short selling campaigns, market reactions, and industry developments</li>
+          <li><strong>News Analysis:</strong> Expert commentary on active campaigns and their implications</li>
+          <li><strong>Research Cataloging:</strong> Building a comprehensive database of activist short seller reports spanning multiple years</li>
+          <li><strong>Community Engagement:</strong> Active presence on FinTwit (Financial Twitter), where much of the short selling discourse occurs</li>
+          <li><strong>Breaking News Coverage:</strong> Real-time reporting on new short reports and major developments</li>
+        </ul>
+      </div>
+
+      <!-- Section: Platform Launch -->
+      <div class="wwa-section" id="wwa-platform">
+        <h2>Upcoming Platform Launch</h2>
+        <div class="wwa-tagline">Q1 2026 — subscription data platform</div>
+        <p>Our subscription data platform will feature:</p>
+        <ul>
+          <li><strong>Comprehensive Database:</strong> Searchable archive of activist short seller research reports</li>
+          <li><strong>Proprietary Analytics:</strong> Five-category evaluation framework covering Business Model Risk, Balance Sheet, Governance, Regulatory, and Hype factors</li>
+          <li><strong>Campaign Tracking:</strong> Real-time monitoring of active short positions and their performance</li>
+          <li><strong>Interactive Dashboard:</strong> Visual analytics and data visualization tools</li>
+          <li><strong>Historical Performance:</strong> Track record analysis of short sellers and their campaigns</li>
+          <li><strong>News Integration:</strong> Our original journalism integrated with data and analytics</li>
+        </ul>
+      </div>
+
+      <!-- Section: Target Audience -->
+      <div class="wwa-section" id="wwa-audience">
+        <h2>Target Audience</h2>
+        <div class="wwa-tagline">Who we're building for</div>
+        <h3>Target Audience</h3>
+        <ul>
+          <li>Retail investors seeking to understand and potentially profit from activist short selling campaigns</li>
+          <li>Active FinTwit community members interested in short-side analysis</li>
+        </ul>
+        <h3>Future Development</h3>
+        <p>Potential institutional products for hedge funds, asset managers, and family offices.</p>
+      </div>
+
+      <!-- Section: Short Selling 101 -->
+      <div class="wwa-section" id="wwa-shortselling">
+        <h2>Background on Short Selling</h2>
+        <div class="wwa-tagline">Investment strategy fundamentals</div>
+        <p>Short selling is an investment strategy where an investor borrows shares of a stock and immediately sells them, with the intention of buying them back later at a lower price. The investor profits if the stock price declines and loses money if it rises.</p>
+
+        <h3>How It Works</h3>
+        <ol>
+          <li>Borrow shares from a broker</li>
+          <li>Sell shares at current market price</li>
+          <li>Wait for price to decline (hopefully)</li>
+          <li>Buy back shares at lower price</li>
+          <li>Return shares to broker</li>
+          <li>Keep the difference as profit</li>
+        </ol>
+
+        <h3>Purpose in Markets</h3>
+        <ul>
+          <li><strong>Price Discovery:</strong> Helps correct overvalued stocks</li>
+          <li><strong>Market Efficiency:</strong> Provides liquidity and opposing viewpoints</li>
+          <li><strong>Risk Management:</strong> Allows hedging strategies</li>
+          <li><strong>Fraud Detection:</strong> Often uncovers corporate malfeasance</li>
+        </ul>
+      </div>
+
+      <!-- Section: Activist Short Selling -->
+      <div class="wwa-section" id="wwa-activist">
+        <h2>Activist Short Selling</h2>
+        <div class="wwa-tagline">Beyond traditional shorting — forensic research meets public advocacy</div>
+        <p>Activist short selling goes far beyond traditional short selling. Activist short sellers conduct extensive forensic research, publish detailed reports alleging fraud, accounting irregularities, or fundamental business problems, and actively promote their thesis through media, social media, and industry channels.</p>
+
+        <h3>Research-Intensive</h3>
+        <p>Activist shorts produce comprehensive reports (often 50–100+ pages) with:</p>
+        <ul>
+          <li>Forensic accounting analysis</li>
+          <li>On-the-ground investigation</li>
+          <li>Supply chain verification</li>
+          <li>Expert interviews</li>
+          <li>Document analysis</li>
+          <li>Whistleblower information</li>
+        </ul>
+
+        <h3>Public Campaigns</h3>
+        <p>Unlike traditional shorts who quietly take positions, activist shorts:</p>
+        <ul>
+          <li>Publish detailed research reports publicly</li>
+          <li>Engage with media (Bloomberg, CNBC, WSJ, etc.)</li>
+          <li>Use Twitter/FinTwit extensively to share findings</li>
+          <li>Present at conferences</li>
+          <li>May engage with regulators</li>
+        </ul>
+
+        <h3>Market Impact</h3>
+        <p>When prominent activist short sellers publish research:</p>
+        <ul>
+          <li>Stock prices can drop 20–50%+ immediately</li>
+          <li>Trading volume spikes dramatically</li>
+          <li>Media coverage intensifies</li>
+          <li>Companies often issue responses/rebuttals</li>
+          <li>Regulatory investigations may follow</li>
+        </ul>
+
+        <h3>Notable Activist Short Sellers</h3>
+        <div class="wwa-notable-grid">
+          <div class="wwa-notable-item">
+            <div class="name">Muddy Waters Research</div>
+            <div class="detail">Carson Block</div>
+          </div>
+          <div class="wwa-notable-item">
+            <div class="name">Hindenburg Research</div>
+            <div class="detail">Nathan Anderson</div>
+          </div>
+          <div class="wwa-notable-item">
+            <div class="name">Citron Research</div>
+            <div class="detail">Andrew Left</div>
+          </div>
+          <div class="wwa-notable-item">
+            <div class="name">Spruce Point Capital</div>
+            <div class="detail">&nbsp;</div>
+          </div>
+          <div class="wwa-notable-item">
+            <div class="name">Kerrisdale Capital</div>
+            <div class="detail">&nbsp;</div>
+          </div>
+          <div class="wwa-notable-item">
+            <div class="name">Grizzly Research</div>
+            <div class="detail">&nbsp;</div>
+          </div>
+        </div>
+        <p style="font-size:13px;color:var(--text-dim)">And dozens of others operating globally.</p>
+      </div>
+
+      <!-- Section: Why This Matters -->
+      <div class="wwa-section" id="wwa-whyitmatters">
+        <h2>Why This Matters</h2>
+        <div class="wwa-tagline">For investors, for markets, for FinTwit</div>
+
+        <h3>For Retail Investors</h3>
+        <p>Activist short reports often expose fraud or serious business problems before traditional research catches them. Understanding these campaigns can:</p>
+        <ul>
+          <li>Protect portfolios from fraudulent companies</li>
+          <li>Provide trading opportunities during volatility</li>
+          <li>Offer insights into corporate malfeasance</li>
+          <li>Level the playing field with institutional investors</li>
+        </ul>
+
+        <h3>Famous Cases</h3>
+        <div class="wwa-case-card">
+          <div class="case-name">Luckin Coffee</div>
+          <div class="case-detail">Fraud exposed by Muddy Waters Research</div>
+        </div>
+        <div class="wwa-case-card">
+          <div class="case-name">Nikola Corporation</div>
+          <div class="case-detail">Hindenburg report preceded federal charges</div>
+        </div>
+        <div class="wwa-case-card">
+          <div class="case-name">Wirecard</div>
+          <div class="case-detail">Multiple shorts warned for years before collapse</div>
+        </div>
+
+        <h3>For Markets</h3>
+        <p>These campaigns serve a watchdog function, holding companies accountable and improving market integrity.</p>
+
+        <h3>For FinTwit</h3>
+        <p>The short selling community is highly active on Twitter, where breaking news, analysis, and debate happen in real-time. This is where our target audience — retail investors interested in short selling — already congregates and engages.</p>
+      </div>
+
+      <!-- Section: Why Marketing Now -->
+      <div class="wwa-section" id="wwa-marketing">
+        <h2>Why Marketing is Critical Now</h2>
+        <div class="wwa-tagline">We're at an inflection point</div>
+
+        <div class="wwa-callout">
+          <p style="font-weight:600;color:var(--text)">We need to build momentum across every channel before the April 2nd platform launch.</p>
+        </div>
+
+        <ul class="wwa-priority-list">
+          <li><strong>Q2 2026 Platform Launch:</strong> Build anticipation and a subscriber waitlist (April 2nd)</li>
+          <li><strong>Brand Awareness:</strong> Establish Activ8 Insights as the go-to news source for short selling intelligence</li>
+          <li><strong>FinTwit Dominance:</strong> Twitter is where retail investors discuss short campaigns — we need sophisticated social media management that understands this community</li>
+          <li><strong>Content Pipeline:</strong> Regular, high-quality news articles and analysis to build trust and demonstrate expertise</li>
+          <li><strong>Community Building:</strong> Engage retail investors around our breaking news coverage to drive platform subscriptions</li>
+          <li><strong>Audience Growth:</strong> Scale from current followers to tens of thousands of engaged retail investors</li>
+        </ul>
+      </div>
+
+      <!-- Section: Competitors -->
+      <div class="wwa-section" id="wwa-competitors">
+        <h2>Competitive Landscape</h2>
+        <div class="wwa-tagline">Intelligence on market competitors and our strategic advantages</div>
+
+        <div class="wwa-callout">
+          <p style="font-weight:600;color:var(--text)">As raw data becomes freely available, Activ8's differentiation must come from news, analysis, customized analytics, and marketing reach.</p>
+        </div>
+
+        <!-- Market Opportunity -->
+        <h3 style="margin-top:24px;margin-bottom:12px">The Retail Trader Market</h3>
+        <div class="grid-3" style="margin-bottom:20px">
+          <div class="card" style="text-align:center;padding:16px">
+            <div style="font-size:24px;font-weight:700;color:var(--orange)">165M</div>
+            <div class="mono text-dim" style="font-size:11px">US Stock Traders</div>
+          </div>
+          <div class="card" style="text-align:center;padding:16px">
+            <div style="font-size:24px;font-weight:700;color:var(--blue)">$1.22T</div>
+            <div class="mono text-dim" style="font-size:11px">Total Margin Debt (Record)</div>
+          </div>
+          <div class="card" style="text-align:center;padding:16px">
+            <div style="font-size:24px;font-weight:700;color:var(--teal)">~19.5%</div>
+            <div class="mono text-dim" style="font-size:11px">Retail Share of Volume</div>
+          </div>
+        </div>
+
+        <!-- Breakout Point -->
+        <div class="card card-accent-rose" style="margin-bottom:20px">
+          <h4 style="font-weight:600;margin-bottom:4px">Breakout Point <span style="font-size:12px;padding:2px 8px;border-radius:6px;background:rgba(244,63,94,0.15);color:var(--rose);margin-left:8px">HIGH THREAT</span></h4>
+          <p style="font-size:13px;color:var(--text-dim);margin-bottom:12px">Breakout Point GmbH · Founded 2018, Dusseldorf, Germany · Founder: Ivan Cosovic (100% owner)</p>
+          <table class="data-table" style="font-size:13px">
+            <tbody>
+              <tr><td class="text-dim">Twitter/X Followers</td><td>~30,000</td></tr>
+              <tr><td class="text-dim">Social Presence</td><td>X (Twitter) only — no IG, FB, LI, TT</td></tr>
+              <tr><td class="text-dim">Monthly Traffic</td><td>~321 visitors/day (~9,600/mo)</td></tr>
+              <tr><td class="text-dim">EU Short Disclosures</td><td>31,227</td></tr>
+              <tr><td class="text-dim">Short Calls Tracked (TTM)</td><td>155</td></tr>
+              <tr><td class="text-dim">Other Data Products</td><td>Retail trading activity, EU short coverage</td></tr>
+              <tr><td class="text-dim">Historical Database</td><td>Yes — has historical data as well</td></tr>
+              <tr><td class="text-dim">Data Visualizations</td><td style="color:var(--rose)">Non-existent</td></tr>
+              <tr><td class="text-dim">Design / UX</td><td style="color:var(--rose)">Poor graphics, unappealing interface</td></tr>
+              <tr><td class="text-dim">Pricing</td><td>EUR 79-299/month</td></tr>
+              <tr><td class="text-dim">Marketing Team</td><td style="color:var(--green)">None evident</td></tr>
+            </tbody>
+          </table>
+          <p style="font-size:13px;color:var(--text-mid);margin-top:12px"><strong>Vulnerability:</strong> Single-founder with no marketing team. Only active on X (no other social). Poor design and non-existent data visualizations make the product unappealing. High prices create opportunity for aggressive entrant. Data-first approach lacks editorial differentiation.</p>
+        </div>
+
+        <!-- Insightia -->
+        <div class="card" style="margin-bottom:20px">
+          <h4 style="font-weight:600;margin-bottom:4px">Insightia (Diligent) <span style="font-size:12px;padding:2px 8px;border-radius:6px;background:rgba(74,222,128,0.15);color:var(--green);margin-left:8px">LOW THREAT</span></h4>
+          <p style="font-size:13px;color:var(--text-dim);margin-bottom:12px">Parent: Diligent Corporation · Offices: New York, London · Target: Institutions, IR teams</p>
+          <table class="data-table" style="font-size:13px">
+            <tbody>
+              <tr><td class="text-dim">Database</td><td>Since 2010, 150+ activist profiles, 1,000+ campaigns</td></tr>
+              <tr><td class="text-dim">Pricing</td><td>Enterprise (demo required)</td></tr>
+              <tr><td class="text-dim">Features</td><td>In-house journalist team, live newswire &amp; alerts</td></tr>
+            </tbody>
+          </table>
+          <p style="font-size:13px;color:var(--text-mid);margin-top:12px"><strong>Why Low Threat:</strong> Enterprise pricing makes them inaccessible to retail. Different market segment. Only risk: if they launch a downmarket product.</p>
+        </div>
+
+        <!-- Head-to-Head -->
+        <div class="card card-accent" style="margin-bottom:20px">
+          <h4 style="font-weight:600;margin-bottom:12px">Activ8 vs. Breakout Point</h4>
+          <table class="data-table" style="font-size:13px">
+            <thead><tr><th>Dimension</th><th>Breakout Point</th><th style="color:var(--orange)">Activ8 Insights</th></tr></thead>
+            <tbody>
+              <tr><td class="text-dim">Business Model</td><td>SaaS Subscription</td><td>SaaS + News Agency</td></tr>
+              <tr><td class="text-dim">Entry Price</td><td>EUR 79/mo (~$86)</td><td>$99/mo (with free tier planned)</td></tr>
+              <tr><td class="text-dim">Target Customer</td><td>Pro retail, HFs</td><td style="color:var(--orange)">ALL retail traders (165M)</td></tr>
+              <tr><td class="text-dim">Social Channels</td><td>X only</td><td style="color:var(--orange)">IG, FB, X, LI, TT</td></tr>
+              <tr><td class="text-dim">X Following</td><td>~30,000</td><td>Building (211)</td></tr>
+              <tr><td class="text-dim">Historical Data</td><td>Yes (historical DB)</td><td style="color:var(--orange)">Since 2008 (1,500+)</td></tr>
+              <tr><td class="text-dim">Data Visualizations</td><td style="color:var(--rose)">Non-existent</td><td style="color:var(--orange)">Core feature</td></tr>
+              <tr><td class="text-dim">Design / UX</td><td style="color:var(--rose)">Poor, unappealing</td><td style="color:var(--orange)">Modern, polished</td></tr>
+              <tr><td class="text-dim">News/Editorial</td><td>Weekly summaries</td><td style="color:var(--orange)">Core differentiator</td></tr>
+              <tr><td class="text-dim">Other Products</td><td>Retail activity, EU shorts</td><td>Researcher profiles, alerts</td></tr>
+              <tr><td class="text-dim">Marketing Team</td><td>None</td><td style="color:var(--orange)">Yes (CloseUp + in-house)</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Our Advantages -->
+        <h3 style="margin-top:24px;margin-bottom:12px">Our Competitive Advantages</h3>
+        <div style="display:flex;flex-direction:column;gap:12px">
+          <div style="display:flex;gap:12px;align-items:start"><span style="background:var(--orange);color:#000;font-weight:700;font-size:12px;width:24px;height:24px;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0">1</span><div><div style="font-weight:600;font-size:14px">News-First Editorial Model</div><div style="font-size:13px;color:var(--text-dim)">Neither competitor has a real newsroom. We break stories and create the narrative around campaigns.</div></div></div>
+          <div style="display:flex;gap:12px;align-items:start"><span style="background:var(--orange);color:#000;font-weight:700;font-size:12px;width:24px;height:24px;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0">2</span><div><div style="font-weight:600;font-size:14px">Customized Analytics &amp; Intelligence</div><div style="font-size:13px;color:var(--text-dim)">Researcher scorecards, thesis validation rates, sector patterns, timing analysis, personalized alerts.</div></div></div>
+          <div style="display:flex;gap:12px;align-items:start"><span style="background:var(--orange);color:#000;font-weight:700;font-size:12px;width:24px;height:24px;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0">3</span><div><div style="font-weight:600;font-size:14px">Actual Marketing Capability</div><div style="font-size:13px;color:var(--text-dim)">Breakout Point is a one-man German operation. We execute coordinated campaigns: content, social, paid, PR.</div></div></div>
+          <div style="display:flex;gap:12px;align-items:start"><span style="background:var(--orange);color:#000;font-weight:700;font-size:12px;width:24px;height:24px;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0">4</span><div><div style="font-weight:600;font-size:14px">Broader Audience Strategy</div><div style="font-size:13px;color:var(--text-dim)">165M US retail traders. Competitors target only short sellers. We serve EVERYONE: long investors, dip buyers, squeeze hunters.</div></div></div>
+          <div style="display:flex;gap:12px;align-items:start"><span style="background:var(--orange);color:#000;font-weight:700;font-size:12px;width:24px;height:24px;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0">5</span><div><div style="font-weight:600;font-size:14px">Historical Depth &amp; Researcher Profiles</div><div style="font-size:13px;color:var(--text-dim)">Database back to 2008 with 1,500+ reports. Deep researcher profiles with track records and win rates.</div></div></div>
+        </div>
+
+        <!-- SWOT -->
+        <h3 style="margin-top:24px;margin-bottom:12px">SWOT Analysis</h3>
+        <div class="grid-2" style="gap:12px">
+          <div class="card" style="border-top:3px solid var(--green);padding:16px">
+            <h5 style="color:var(--green);font-size:12px;text-transform:uppercase;letter-spacing:1px;margin-bottom:10px">Strengths</h5>
+            <ul style="font-size:13px;color:var(--text-mid);padding-left:16px;display:flex;flex-direction:column;gap:4px">
+              <li>News-first editorial (unique)</li>
+              <li>Historical database 2008+ (1,500+ reports)</li>
+              <li>Customized analytics layer</li>
+              <li>Marketing capability (vs none)</li>
+              <li>Broader TAM (all retail, not just shorts)</li>
+              <li>Deep researcher profiles</li>
+            </ul>
+          </div>
+          <div class="card" style="border-top:3px solid var(--rose);padding:16px">
+            <h5 style="color:var(--rose);font-size:12px;text-transform:uppercase;letter-spacing:1px;margin-bottom:10px">Weaknesses</h5>
+            <ul style="font-size:13px;color:var(--text-mid);padding-left:16px;display:flex;flex-direction:column;gap:4px">
+              <li>Nascent social presence vs 30K followers</li>
+              <li>No media citations yet</li>
+              <li>No EU regulatory coverage</li>
+              <li>Pre-launch, unproven PMF</li>
+              <li>Pricing strategy not finalized</li>
+            </ul>
+          </div>
+          <div class="card" style="border-top:3px solid var(--blue);padding:16px">
+            <h5 style="color:var(--blue);font-size:12px;text-transform:uppercase;letter-spacing:1px;margin-bottom:10px">Opportunities</h5>
+            <ul style="font-size:13px;color:var(--text-mid);padding-left:16px;display:flex;flex-direction:column;gap:4px">
+              <li>165M retail traders (massive TAM)</li>
+              <li>Long-only investors need protection</li>
+              <li>Content marketing via breaking news</li>
+              <li>Competitors have no marketing</li>
+              <li>Data commoditization = analytics premium</li>
+            </ul>
+          </div>
+          <div class="card" style="border-top:3px solid var(--amber);padding:16px">
+            <h5 style="color:var(--amber);font-size:12px;text-transform:uppercase;letter-spacing:1px;margin-bottom:10px">Threats</h5>
+            <ul style="font-size:13px;color:var(--text-mid);padding-left:16px;display:flex;flex-direction:column;gap:4px">
+              <li>BP's 7-year market presence</li>
+              <li>Free competitors capture casual users</li>
+              <li>Social follower gap hard to close</li>
+              <li>Insightia could launch downmarket</li>
+              <li>Market may be smaller than projected</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Section: Brand Guidelines -->
+      <div class="wwa-section" id="wwa-brand">
+        <h2>Brand Guidelines</h2>
+        <div class="wwa-tagline">Single source of truth for all brand decisions. Reference for CloseUp Marketing and new team members.</div>
+
+        <!-- Logo -->
+        <div class="card card-accent" style="margin-bottom:20px">
+          <h4 style="font-weight:600;margin-bottom:16px">Logo</h4>
+          <div style="display:flex;align-items:center;gap:24px;margin-bottom:16px;flex-wrap:wrap">
+            <img src="assets/a8i-dark-transparent.svg" alt="A8I Mark" style="height:64px;width:auto;">
+            <img src="assets/full-logo-dark-mode-transparent.svg" alt="Activ8 Insights Full Logo" style="height:40px;width:auto;">
+          </div>
+          <div class="mono text-dim" style="font-size:12px;margin-bottom:16px">The Short Side of Wall Street™</div>
+          <div class="ch-stat-row"><span class="ch-stat-label">Primary Mark</span><span class="ch-stat-val" style="font-size:12px">A8I icon with blue 8</span></div>
+          <div class="ch-stat-row"><span class="ch-stat-label">Wordmark</span><span class="ch-stat-val" style="font-size:12px">"Activ8 Insights" full logo</span></div>
+          <div class="ch-stat-row"><span class="ch-stat-label">Rule</span><span class="ch-stat-val text-rose" style="font-size:12px">Never use on light backgrounds</span></div>
+        </div>
+
+        <!-- Color Palette -->
+        <div class="card" style="margin-bottom:20px">
+          <h4 style="font-weight:600;margin-bottom:16px">Color Palette</h4>
+          <h5 style="font-size:13px;color:var(--text-dim);margin-bottom:12px">BRAND COLORS</h5>
+          <div class="swatch-grid">
+            <div class="swatch"><div class="swatch-color" style="background:#0E1D29"></div><div class="swatch-info"><div class="swatch-name">Dark Navy</div><div class="swatch-hex">#0E1D29 — Primary Background</div></div></div>
+            <div class="swatch"><div class="swatch-color" style="background:#57B8DD"></div><div class="swatch-info"><div class="swatch-name">Sky Blue</div><div class="swatch-hex">#57B8DD — Primary Accent</div></div></div>
+            <div class="swatch"><div class="swatch-color" style="background:#DAF2FE"></div><div class="swatch-info"><div class="swatch-name">Ice Blue</div><div class="swatch-hex">#DAF2FE — Light / Highlights</div></div></div>
+            <div class="swatch"><div class="swatch-color" style="background:#FF1053"></div><div class="swatch-info"><div class="swatch-name">Red</div><div class="swatch-hex">#FF1053 — CTAs / Emphasis</div></div></div>
+          </div>
+        </div>
+
+        <!-- Voice & Tone -->
+        <div class="card" style="margin-bottom:20px">
+          <h4 style="font-weight:600;margin-bottom:16px">Voice &amp; Tone Rules</h4>
+          <div style="display:flex;flex-direction:column;gap:10px;font-size:14px">
+            <div style="display:flex;gap:10px"><span style="color:var(--rose);font-weight:600">✕</span><span>No em dashes: use colons or rewrite</span></div>
+            <div style="display:flex;gap:10px"><span style="color:var(--rose);font-weight:600">✕</span><span>No corporate fluff: direct, punchy, human</span></div>
+            <div style="display:flex;gap:10px"><span style="color:var(--rose);font-weight:600">✕</span><span>Never frame content as investment advice</span></div>
+            <div style="display:flex;gap:10px"><span style="color:var(--green);font-weight:600">✓</span><span>Bold and confident tone</span></div>
+            <div style="display:flex;gap:10px"><span style="color:var(--green);font-weight:600">✓</span><span>Always news-first framing</span></div>
+            <div style="display:flex;gap:10px"><span style="color:var(--green);font-weight:600">✓</span><span>Audience: sophisticated retail investors, FinTwit community</span></div>
+            <div style="display:flex;gap:10px"><span style="color:var(--green);font-weight:600">✓</span><span>Bullet points preferred over long paragraphs</span></div>
+            <div style="display:flex;gap:10px"><span style="color:var(--green);font-weight:600">✓</span><span>Tone: Bloomberg Terminal meets sharp independent newsroom</span></div>
+          </div>
+        </div>
+
+        <!-- Calendar Color Key -->
+        <div class="card" style="margin-bottom:20px">
+          <h4 style="font-weight:600;margin-bottom:16px">Calendar Color Key</h4>
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <div style="display:flex;align-items:center;gap:12px"><div style="width:16px;height:16px;border-radius:4px;background:#A78BFA;flex-shrink:0"></div><span class="mono" style="font-size:13px">Monthly Report</span></div>
+            <div style="display:flex;align-items:center;gap:12px"><div style="width:16px;height:16px;border-radius:4px;background:#4B8BFF;flex-shrink:0"></div><span class="mono" style="font-size:13px">Newsletter</span></div>
+            <div style="display:flex;align-items:center;gap:12px"><div style="width:16px;height:16px;border-radius:4px;background:#F43F5E;flex-shrink:0"></div><span class="mono" style="font-size:13px">Short Report Recap (Carousel + LinkedIn)</span></div>
+            <div style="display:flex;align-items:center;gap:12px"><div style="width:16px;height:16px;border-radius:4px;background:#34D399;flex-shrink:0"></div><span class="mono" style="font-size:13px">Article Posts</span></div>
+            <div style="display:flex;align-items:center;gap:12px"><div style="width:16px;height:16px;border-radius:4px;background:#2DD4BF;flex-shrink:0"></div><span class="mono" style="font-size:13px">CloseUp Content</span></div>
+            <div style="display:flex;align-items:center;gap:12px"><div style="width:16px;height:16px;border-radius:4px;background:#FF6B2C;flex-shrink:0"></div><span class="mono" style="font-size:13px">Launch Campaign</span></div>
+            <div style="display:flex;align-items:center;gap:12px"><div style="width:16px;height:16px;border-radius:4px;background:#F59E0B;flex-shrink:0"></div><span class="mono" style="font-size:13px">News Posts</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Section: Content Gallery -->
+      <div class="wwa-section" id="wwa-gallery">
+        <h2>CloseUp Marketing: Content Library</h2>
+        <div class="wwa-tagline">Generated content from CloseUp Marketing (Spain). Click arrows to browse multi-slide posts.</div>
+
+        <div class="grid-3" id="contentGallery">
+          <div class="card" style="padding:0;overflow:hidden">
+            <div style="border-top:3px solid var(--purple);position:relative">
+              <div class="gallery-slides" data-group="whoweare"><img src="Closeup Marketing/Closeup Marketing Generated Content/Who we are" alt="Who We Are - Slide 1" style="width:100%;display:block"><img src="Closeup Marketing/Closeup Marketing Generated Content/Who we are2" alt="Who We Are - Slide 2" style="width:100%;display:none"><img src="Closeup Marketing/Closeup Marketing Generated Content/Who we are3" alt="Who We Are - Slide 3" style="width:100%;display:none"></div>
+              <div class="gallery-nav"><button class="gal-btn" onclick="galPrev('whoweare')">‹</button><span class="gal-counter mono" data-counter="whoweare">1 / 3</span><button class="gal-btn" onclick="galNext('whoweare')">›</button></div>
+            </div>
+            <div style="padding:14px 16px"><div style="font-weight:600;font-size:14px;margin-bottom:2px">Who We Are</div><div class="mono text-dim" style="font-size:11px">Carousel · 3 slides</div></div>
+          </div>
+          <div class="card" style="padding:0;overflow:hidden">
+            <div style="border-top:3px solid var(--orange);position:relative">
+              <div class="gallery-slides" data-group="whatwedo"><img src="Closeup Marketing/Closeup Marketing Generated Content/What we do" alt="What We Do - Slide 1" style="width:100%;display:block"><img src="Closeup Marketing/Closeup Marketing Generated Content/What we do2" alt="What We Do - Slide 2" style="width:100%;display:none"><img src="Closeup Marketing/Closeup Marketing Generated Content/What we do3" alt="What We Do - Slide 3" style="width:100%;display:none"><img src="Closeup Marketing/Closeup Marketing Generated Content/What we do4" alt="What We Do - Slide 4" style="width:100%;display:none"></div>
+              <div class="gallery-nav"><button class="gal-btn" onclick="galPrev('whatwedo')">‹</button><span class="gal-counter mono" data-counter="whatwedo">1 / 4</span><button class="gal-btn" onclick="galNext('whatwedo')">›</button></div>
+            </div>
+            <div style="padding:14px 16px"><div style="font-weight:600;font-size:14px;margin-bottom:2px">What We Do</div><div class="mono text-dim" style="font-size:11px">Carousel · 4 slides</div></div>
+          </div>
+          <div class="card" style="padding:0;overflow:hidden">
+            <div style="border-top:3px solid var(--teal);position:relative">
+              <div class="gallery-slides" data-group="coverage"><img src="Closeup Marketing/Closeup Marketing Generated Content/What sets our coverage apart" alt="Coverage Apart - Slide 1" style="width:100%;display:block"><img src="Closeup Marketing/Closeup Marketing Generated Content/What sets our coverage apart2" alt="Coverage Apart - Slide 2" style="width:100%;display:none"></div>
+              <div class="gallery-nav"><button class="gal-btn" onclick="galPrev('coverage')">‹</button><span class="gal-counter mono" data-counter="coverage">1 / 2</span><button class="gal-btn" onclick="galNext('coverage')">›</button></div>
+            </div>
+            <div style="padding:14px 16px"><div style="font-weight:600;font-size:14px;margin-bottom:2px">What Sets Our Coverage Apart</div><div class="mono text-dim" style="font-size:11px">Carousel · 2 slides</div></div>
+          </div>
+          <div class="card" style="padding:0;overflow:hidden"><div style="border-top:3px solid var(--blue)"><img src="Closeup Marketing/Closeup Marketing Generated Content/We are the short side" alt="We Are The Short Side" style="width:100%;display:block"></div><div style="padding:14px 16px"><div style="font-weight:600;font-size:14px;margin-bottom:2px">We Are The Short Side</div><div class="mono text-dim" style="font-size:11px">Story/Reel</div></div></div>
+          <div class="card" style="padding:0;overflow:hidden"><div style="border-top:3px solid var(--amber)"><img src="Closeup Marketing/Closeup Marketing Generated Content/Data +1000 reports…" alt="Data 1000+ Reports" style="width:100%;display:block"></div><div style="padding:14px 16px"><div style="font-weight:600;font-size:14px;margin-bottom:2px">Data: 1,000+ Reports</div><div class="mono text-dim" style="font-size:11px">Story/Reel</div></div></div>
+          <div class="card" style="padding:0;overflow:hidden"><div style="border-top:3px solid var(--green)"><img src="Closeup Marketing/Closeup Marketing Generated Content/What is Short Selling" alt="What is Short Selling" style="width:100%;display:block"></div><div style="padding:14px 16px"><div style="font-weight:600;font-size:14px;margin-bottom:2px">What is Short Selling</div><div class="mono text-dim" style="font-size:11px">Story/Reel</div></div></div>
+          <div class="card" style="padding:0;overflow:hidden"><div style="border-top:3px solid var(--rose)"><img src="Closeup Marketing/Closeup Marketing Generated Content/Crypto_" alt="Crypto" style="width:100%;display:block"></div><div style="padding:14px 16px"><div style="font-weight:600;font-size:14px;margin-bottom:2px">Crypto</div><div class="mono text-dim" style="font-size:11px">Post</div></div></div>
+          <div class="card" style="padding:0;overflow:hidden"><div style="border-top:3px solid var(--cyan)"><img src="Closeup Marketing/Closeup Marketing Generated Content/Robinhood" alt="Robinhood" style="width:100%;display:block"></div><div style="padding:14px 16px"><div style="font-weight:600;font-size:14px;margin-bottom:2px">Robinhood</div><div class="mono text-dim" style="font-size:11px">Post</div></div></div>
+          <div class="card" style="padding:0;overflow:hidden"><div style="border-top:3px solid var(--yellow)"><img src="Closeup Marketing/Closeup Marketing Generated Content/US Short selling ATH" alt="US Short Selling ATH" style="width:100%;display:block"></div><div style="padding:14px 16px"><div style="font-weight:600;font-size:14px;margin-bottom:2px">US Short Selling ATH</div><div class="mono text-dim" style="font-size:11px">Post</div></div></div>
+        </div>
+      </div>
+
+    </div><!-- .wwa-content -->
+  </div><!-- .wwa-layout -->
+
+  <div class="footer">Activ8 Insights · The Short Side of Wall Street™ · Internal Use Only</div>
+</div>
+
+</div><!-- .main -->
+</div><!-- .app-shell -->
+
+<script>
+// ═══════════════════ CONFIG ═══════════════════
+const CONFIG = {
+  plausible: { apiKey: '', siteId: 'activ8insights.com' },
+  buttondown: { apiKey: '' },
+};
+
+const BASELINE_DATA = {
+  website: {
+    uniqueVisitors: 741, totalVisits: 811, pageviews: 1900,
+    viewsPerVisit: 2.36, bounceRate: 68, avgDuration: '2m 20s',
+    sources: { direct: 419, organicSearch: 236, email: 47, organicSocial: 42, referral: 6 }
+  },
+  newsletter: { subscribers: 606, openRate: 12 },
+  social: {
+    twitter: { followers: 211, posts: null, impressions: null, interactions: null },
+    instagram: { followers: 17, posts: 12, impressions: 1228, interactions: 27 },
+    tiktok: { followers: 0, posts: 7, impressions: 154, interactions: 4 },
+    facebook: { followers: 1, posts: 12, impressions: 85, interactions: 2 },
+    linkedin: { followers: 19, posts: null, impressions: null, interactions: null },
+  }
+};
+
+// ═══════════════════ NAV DATE ═══════════════════
+document.getElementById('navDate').textContent = new Date().toLocaleDateString('en-US', {
+  weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
+});
+
+// ═══════════════════ TAB SWITCHING ═══════════════════
+document.querySelectorAll('.sidebar-tab').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.sidebar-tab').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('panel-' + btn.dataset.tab).classList.add('active');
+    // Scroll main content to top on tab switch
+    document.querySelector('.main').scrollTop = 0;
+  });
+});
+
+// ═══════════════════ COUNTDOWN ═══════════════════
+function updateCountdown() {
+  const target = new Date('2026-04-02T09:00:00-04:00').getTime();
+  const now = Date.now();
+  const diff = target - now;
+  if (diff <= 0) {
+    document.getElementById('cd-days').textContent = '00';
+    document.getElementById('cd-hours').textContent = '00';
+    document.getElementById('cd-mins').textContent = '00';
+    document.getElementById('cd-secs').textContent = '00';
+    document.querySelector('.countdown-badge').textContent = '🟢 LAUNCHED';
+    document.querySelector('.countdown-badge').style.color = 'var(--green)';
+    document.querySelector('.countdown-badge').style.background = 'rgba(52,211,153,0.12)';
+    document.querySelector('.countdown-badge').style.borderColor = 'rgba(52,211,153,0.25)';
+    return;
+  }
+  const d = Math.floor(diff / 86400000);
+  const h = Math.floor((diff % 86400000) / 3600000);
+  const m = Math.floor((diff % 3600000) / 60000);
+  const s = Math.floor((diff % 60000) / 1000);
+  document.getElementById('cd-days').textContent = String(d).padStart(2, '0');
+  document.getElementById('cd-hours').textContent = String(h).padStart(2, '0');
+  document.getElementById('cd-mins').textContent = String(m).padStart(2, '0');
+  document.getElementById('cd-secs').textContent = String(s).padStart(2, '0');
+  // Home page countdown
+  const hd = document.getElementById('home-cd-days');
+  if (hd) {
+    hd.textContent = String(d).padStart(2, '0');
+    document.getElementById('home-cd-hours').textContent = String(h).padStart(2, '0');
+    document.getElementById('home-cd-mins').textContent = String(m).padStart(2, '0');
+    document.getElementById('home-cd-secs').textContent = String(s).padStart(2, '0');
+  }
+}
+updateCountdown();
+setInterval(updateCountdown, 1000);
+
+// ═══════════════════ GO TAB HELPER ═══════════════════
+function goTab(tabName) {
+  document.querySelectorAll('.sidebar-tab').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  const btn = document.querySelector('.sidebar-tab[data-tab="' + tabName + '"]');
+  if (btn) btn.classList.add('active');
+  document.getElementById('panel-' + tabName).classList.add('active');
+  document.querySelector('.main').scrollTop = 0;
+}
+
+// ═══════════════════ CHECKLIST ═══════════════════
+const checklistState = {};
+const totalItems = document.querySelectorAll('#checklistContainer input[type="checkbox"]').length;
+
+function updateChecklist() {
+  const checked = Object.values(checklistState).filter(Boolean).length;
+  const pct = Math.round((checked / totalItems) * 100);
+  document.getElementById('checklistStatus').textContent = checked + ' of ' + totalItems + ' items complete — ' + pct + '% ready';
+  document.getElementById('checklistPct').textContent = pct + '%';
+  document.getElementById('checklistBar').style.width = pct + '%';
+}
+
+document.querySelectorAll('#checklistContainer input[type="checkbox"]').forEach(cb => {
+  cb.addEventListener('change', function() {
+    const key = this.dataset.cl;
+    checklistState[key] = this.checked;
+    this.closest('.checklist-item').classList.toggle('checked', this.checked);
+    updateChecklist();
+  });
+});
+
+// ═══════════════════ COLLAPSIBLE ═══════════════════
+function toggleCollapsible(btn) {
+  btn.classList.toggle('open');
+  const content = btn.nextElementSibling;
+  content.classList.toggle('open');
+}
+
+// ═══════════════════ CALENDAR ═══════════════════
+function buildCalendar() {
+  const grid = document.getElementById('calendarGrid');
+  const today = new Date();
+
+  // We build a flat date range: Mar 13 – Apr 8, 2026
+  const startDate = new Date(2026, 2, 13); // Mar 13
+  const endDate = new Date(2026, 3, 8);    // Apr 8
+
+  // Events keyed by 'YYYY-MM-DD'
+  const events = {
+    // === MARCH ===
+    '2026-03-13': [{text:'TODAY', cls:'pill-orange'}],
+    '2026-03-14': [{text:'Recap Carousel 5pm', cls:'pill-rose', tip:'IG+FB'}],
+    '2026-03-15': [{text:'Newsletter', cls:'pill-blue'}],
+    '2026-03-16': [{text:'CU: Coverage Apart', cls:'pill-teal', tip:'Carousel · IG,FB,TT'}],
+    '2026-03-17': [{text:'LI Recap (Mon)', cls:'pill-rose', tip:'LinkedIn Monday post'}],
+    '2026-03-18': [{text:'Article Post', cls:'pill-green', tip:'IG,FB,TT,X'}],
+    '2026-03-19': [{text:'Article Post', cls:'pill-green', tip:'IG,FB,TT,X'}],
+    '2026-03-20': [{text:'CU: What to Know…', cls:'pill-teal', tip:'Reel · IG,FB,TT'}],
+    '2026-03-21': [{text:'Recap Carousel 5pm', cls:'pill-rose', tip:'IG+FB'}],
+    '2026-03-22': [{text:'Newsletter', cls:'pill-blue'}],
+    '2026-03-23': [{text:'CU: Crypto', cls:'pill-teal', tip:'Post · IG,FB,TT'}],
+    '2026-03-24': [{text:'LI Recap (Mon)', cls:'pill-rose', tip:'LinkedIn Monday post'}],
+    '2026-03-25': [{text:'Article Post', cls:'pill-green', tip:'IG,FB,TT,X'}],
+    '2026-03-26': [{text:'Article Post', cls:'pill-green', tip:'IG,FB,TT,X'}],
+    '2026-03-28': [{text:'Recap Carousel 5pm', cls:'pill-rose', tip:'IG+FB'}],
+    '2026-03-29': [{text:'Newsletter', cls:'pill-blue'}],
+    '2026-03-30': [{text:'CU: Short a Stock', cls:'pill-teal', tip:'Reel · IG,FB,TT'}],
+    '2026-03-31': [{text:'LI Recap (Mon)', cls:'pill-rose', tip:'LinkedIn Monday post'}],
+    // === APRIL ===
+    '2026-04-01': [{text:'Feb Monthly Report', cls:'pill-purple', tip:'Published on site · Free Members'},{text:'MR Carousel+TT+Tweet', cls:'pill-purple', tip:'IG,LI,FB,TT,X'}],
+    '2026-04-02': [{text:'🚀 HARD LAUNCH', cls:'pill-orange'},{text:'Email Seq #1', cls:'pill-orange'},{text:'Social Blast', cls:'pill-orange'}],
+    '2026-04-03': [{text:'Email Seq #2', cls:'pill-orange'},{text:'Walkthrough Video', cls:'pill-amber'}],
+    '2026-04-04': [{text:'Email Seq #3', cls:'pill-orange'},{text:'Recap Carousel 5pm', cls:'pill-rose'}],
+    '2026-04-05': [{text:'Newsletter', cls:'pill-blue'}],
+    '2026-04-06': [{text:'LI Recap (Mon)', cls:'pill-rose'},{text:'BP Comparison', cls:'pill-amber'}],
+    '2026-04-07': [{text:'CU: Understand SS', cls:'pill-teal', tip:'Reel · IG,FB,TT'},{text:'Behind the Scenes', cls:'pill-green'}],
+    '2026-04-08': [{text:'Week 1 Recap', cls:'pill-blue'}],
+  };
+
+  const dayNames = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+  dayNames.forEach(d => {
+    const el = document.createElement('div');
+    el.className = 'cal-header';
+    el.textContent = d;
+    grid.appendChild(el);
+  });
+
+  // Pad start to align with day of week
+  const startDow = startDate.getDay();
+  for (let i = 0; i < startDow; i++) {
+    const el = document.createElement('div');
+    el.className = 'cal-day empty';
+    grid.appendChild(el);
+  }
+
+  // Iterate through each day
+  const cur = new Date(startDate);
+  while (cur <= endDate) {
+    const el = document.createElement('div');
+    el.className = 'cal-day';
+    const m = cur.getMonth(), d = cur.getDate(), y = cur.getFullYear();
+    const key = y + '-' + String(m + 1).padStart(2, '0') + '-' + String(d).padStart(2, '0');
+
+    // Mark launch day
+    if (m === 3 && d === 2) el.classList.add('launch');
+    // Mark today
+    if (y === today.getFullYear() && m === today.getMonth() && d === today.getDate()) el.classList.add('today');
+    // Dim past days
+    if (cur < today && !(y === today.getFullYear() && m === today.getMonth() && d === today.getDate())) el.style.opacity = '0.5';
+    // April section border
+    if (m === 3 && d === 1) el.style.borderTop = '2px solid var(--orange)';
+
+    // Month label for first visible day of each month
+    const monthLabel = (m === 2 && d === 13) ? '<div style="font-size:9px;color:var(--text-dim);margin-bottom:1px">MAR</div>' :
+                       (m === 3 && d === 1) ? '<div style="font-size:9px;color:var(--orange);margin-bottom:1px;font-weight:700">APR</div>' : '';
+
+    let html = monthLabel + '<div class="day-num">' + d + '</div>';
+    if (events[key]) {
+      events[key].forEach(ev => {
+        html += '<span class="cal-pill ' + ev.cls + '">' + ev.text + '</span>';
+      });
+    }
+    el.innerHTML = html;
+    grid.appendChild(el);
+    cur.setDate(cur.getDate() + 1);
+  }
+}
+buildCalendar();
+
+// ═══════════════════ WHO WE ARE: VERTICAL TABS ═══════════════════
+document.querySelectorAll('.wwa-nav-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.wwa-nav-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.wwa-section').forEach(s => s.classList.remove('active'));
+    btn.classList.add('active');
+    const target = btn.dataset.wwa;
+    document.getElementById(target).classList.add('active');
+    // scroll content to top
+    const contentArea = document.querySelector('.wwa-content');
+    if (contentArea) contentArea.scrollTop = 0;
+  });
+});
+
+// ═══════════════════ GALLERY CAROUSEL ═══════════════════
+const galState = {};
+document.querySelectorAll('.gallery-slides').forEach(el => {
+  const group = el.dataset.group;
+  galState[group] = { index: 0, total: el.querySelectorAll('img').length };
+});
+
+function galShow(group) {
+  const slides = document.querySelector(`.gallery-slides[data-group="${group}"]`);
+  const imgs = slides.querySelectorAll('img');
+  const s = galState[group];
+  imgs.forEach((img, i) => img.style.display = i === s.index ? 'block' : 'none');
+  document.querySelector(`[data-counter="${group}"]`).textContent = (s.index + 1) + ' / ' + s.total;
+}
+
+function galNext(group) {
+  const s = galState[group];
+  s.index = (s.index + 1) % s.total;
+  galShow(group);
+}
+
+function galPrev(group) {
+  const s = galState[group];
+  s.index = (s.index - 1 + s.total) % s.total;
+  galShow(group);
+}
+</script>
+</body>
+</html>
